@@ -1,26 +1,12 @@
 import { motion } from 'framer-motion';
-import { Award, ChevronRight, Compass, ExternalLink, Target, Users } from 'lucide-react';
+import { Award, ChevronRight, Compass, Target, Users } from 'lucide-react';
 import React from 'react';
+import AboutUs from './AboutUs';
+import ContactSection from './ContactSection';
 import Navbar from './Navbar';
+import PortfolioPage from './PortfolioPage';
 
 const HomePage = () => {
-  const teamMembers = [
-    {
-      name: "Ganesh",
-      role: "Founder & CEO",
-      description: "Ganesh leads SurgeWing with a vision for AI-driven business growth, helping D2C brands scale through innovation and data."
-    },
-    {
-      name: "Suhas",
-      role: "CTO",
-      description: "Driving innovation and scalability, Suhas leads SurgeWing's tech vision with cutting-edge solutions."
-    },
-    {
-      name: "Ataur",
-      role: "CDO",
-      description: "Crafting impactful visuals, Ataur shapes SurgeWing's brand identity with creativity and strategy."
-    }
-  ];
   
   const values = [
     { icon: Target, title: "Innovation", description: "We constantly push boundaries and embrace new technologies to deliver cutting-edge solutions.", delay: 0.3 },
@@ -50,49 +36,16 @@ const HomePage = () => {
       <p className="text-gray-600">{description}</p>
     </motion.div>
   );
-  interface PortfolioCardProps {
-    image: string;
-    title: string;
-    category: string;
-    description: string;
-    delay: number;
-  }
-  
-  const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, category, description, delay }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
-      className="bg-zinc-900 rounded-lg overflow-hidden group"
-    >
-      <div className="relative overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-64 object-cover"
-        />
-        <div className="absolute inset-0 bg-yellow-400 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
-      </div>
-      <div className="p-6">
-        <div className="text-yellow-400 text-sm mb-2">{category}</div>
-        <h3 className="text-white text-xl font-bold mb-2">{title}</h3>
-        <p className="text-gray-400 mb-4">{description}</p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          className="flex items-center text-white"
-        >
-          View Case Study <ExternalLink className="ml-2 w-4 h-4" />
-        </motion.button>
-      </div>
-    </motion.div>
-  );
 
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
       {/* Hero Section */}
       <section className="relative container mx-auto px-6 py-16 mb-16 pt-32 bg-cover bg-center" 
-      id="home" style={{ backgroundImage: "url('/images/home.jpg')" }}>
+      id="home" style={{ backgroundImage: "url('/images/home.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat", }}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -150,87 +103,7 @@ const HomePage = () => {
 
 
       {/* About Section */}
-      <div className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left side - Image */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="w-full h-full"
-            >
-              <img
-                src="/api/placeholder/600/600"
-                alt="SurgeWing Team"
-                className="rounded-lg shadow-xl w-full h-full object-cover"
-              />
-            </motion.div>
-
-            {/* Right side - Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-6"
-            >
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-4xl font-bold text-gray-900 mb-6"
-              >
-                ABOUT US
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-lg text-gray-700 mb-4"
-              >
-                At SurgeWing, we empower D2C brands with business intelligence, branding,
-                web development, and content design to fuel their growth.
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-lg text-gray-700 mb-4"
-              >
-                Our data-driven approach ensures that every marketing move is optimized for
-                maximum impact and scalability. We believe in innovation, personalization, and
-                strategic execution to help brands thrive in an evolving digital landscape.
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="text-lg text-gray-700 mb-4"
-              >
-                Whether you're a startup looking for a breakthrough or an established brand
-                seeking transformation, we craft solutions that drive results.
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="text-lg text-gray-700"
-              >
-                We believe in the power of AI, creativity, and strategic execution to transform
-                brands into industry leaders. Whether you're a startup looking to establish your
-                presence or a growing business aiming for expansion, our tailored approach
-                ensures measurable success. At SurgeWing, we don't just market—we build
-                brands that thrive in the digital age.
-              </motion.p>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
+      <AboutUs />
       {/* Services Section */}
       <div className="min-h-screen bg-white flex">
         {/* Left Content Section */}
@@ -301,24 +174,20 @@ const HomePage = () => {
           <div className="md:w-3/4">
             <motion.section initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
               <h1 className="text-5xl font-bold text-gray-900 mb-6">Our Vision</h1>
-              <div className="bg-gray-100 p-8 rounded-lg shadow-md">
                 <p className="text-gray-700 text-lg leading-relaxed">
                   To be the catalyst for digital transformation, empowering businesses to thrive 
                   in the digital age through innovative marketing solutions and exceptional service.
                 </p>
-              </div>
             </motion.section>
   
             <motion.section initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-12">
               <h2 className="text-5xl font-bold text-gray-900 mb-6">Our Mission</h2>
-              <div className="bg-gray-100 p-8 rounded-lg shadow-md">
                 <p className="text-gray-700 text-lg leading-relaxed">
-                  We deliver measurable results through data-driven marketing strategies, 
-                  creative excellence, and cutting-edge technology. Our mission is to help 
-                  businesses build meaningful connections with their audience and achieve 
+                  We deliver measurable results through data-driven marketing strategies,
+                  creative excellence, and cutting-edge technology. Our mission is to help
+                  businesses build meaningful connections with their audience and achieve
                   sustainable growth in the digital landscape.
                 </p>
-              </div>
             </motion.section>
   
             <motion.section initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
@@ -337,101 +206,9 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      
-         <section className="container mx-auto px-6 py-16 mb-16 pt-32 bg-white" id="home">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            <div className="lg:col-span-2 flex flex-col justify-center space-y-6">
-              <h1 className="text-5xl font-bold text-gray-900">Company Portfolio</h1>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                At SurgeWing, we specialize in empowering D2C brands through cutting-edge business intelligence, strategic branding, and growth-focused digital marketing. Our expertise ensures that every brand we work with gains a competitive edge through data-driven decision-making.
-              </p>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                We craft compelling brand identities and marketing strategies that resonate with target audiences. From designing visually striking brand assets to executing high-impact campaigns, we help businesses create lasting impressions and build customer loyalty.
-              </p>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                Our web development and e-commerce solutions focus on delivering seamless digital experiences. By building high-performance websites and optimizing online stores, we ensure brands maximize engagement, streamline operations, and drive revenue growth.
-              </p>
-            </div>
-            
-            <div className="lg:col-span-3">
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-4"
-              >
-                <div className="space-y-4">
-                  <PortfolioCard 
-                    image="/api/placeholder/400/250" 
-                    title="E-commerce Growth Strategy" 
-                    category="Digital Marketing" 
-                    description="Helped a D2C brand achieve 300% growth in online sales through integrated marketing campaigns." 
-                    delay={0.2} 
-                  />
-                  <PortfolioCard 
-                    image="/api/placeholder/400/250" 
-                    title="Brand Transformation" 
-                    category="Branding" 
-                    description="Complete brand overhaul and digital presence optimization for a luxury lifestyle brand." 
-                    delay={0.3} 
-                  />
-                  <PortfolioCard 
-                    image="/api/placeholder/400/250" 
-                    title="SEO Success Story" 
-                    category="SEO & Content" 
-                    description="Achieved 200% increase in organic traffic through strategic content and technical SEO." 
-                    delay={0.4} 
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-
-      {/* Team Section */}
-      <section className="container mx-auto px-6 py-24" id="team">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-bold text-white mb-12"
-        >
-          MEET OUR TEAM
-        </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {teamMembers.map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 * index }}
-              className="bg-zinc-900/50 p-8 rounded-lg"
-            >
-              <h3 className="text-xl font-bold text-yellow-400 mb-2">
-                {member.name}, <span className="text-white">{member.role}</span>
-              </h3>
-              <p className="text-gray-300">{member.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
+      <PortfolioPage />
       {/* Contact Section */}
-      <section className="container mx-auto px-6 py-24" id="contact">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-zinc-900/50 p-8 rounded-lg"
-        >
-          <h2 className="text-5xl font-bold text-white mb-8">CONTACT US</h2>
-          <div className="space-y-4 text-gray-300">
-            <p>+123-456-7890</p>
-            <p>www.reallygreatsite.com</p>
-            <p>hello@reallygreatsite.com</p>
-            <p>123 Anywhere ST., Any City, ST 12345</p>
-          </div>
-        </motion.div>
-      </section>
+      <ContactSection />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, Compass, Target, Users } from 'lucide-react';
 import React from 'react';
-import Navbar from './Navbar';
 
 interface ValueCardProps {
   icon: React.ComponentType<{ className?: string }>;
@@ -35,7 +34,6 @@ const Vision = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <div className="container mx-auto px-6 pt-32 pb-16 flex flex-col md:flex-row gap-12">
         {/* Left Side Content */}
         <div className="md:w-3/4">
