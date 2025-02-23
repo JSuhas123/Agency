@@ -1,26 +1,28 @@
-import AboutPage from './components/About us'; // Corrected import path
-import CaseStudies from './components/CaseStudies';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AboutUs from './components/AboutUs';
 import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
+//import DigitalMarketing from './components/DigitalMarketing';
+import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
-import PortfolioPage from './components/PortfolioPage'; // Corrected import path
+import PortfolioPage from './components/PortfolioPage';
 import Services from './components/Services';
-import TeamPage from './components/TeamPag'; // Corrected import path
+import TeamPage from './components/TeamPage';
+import Vision from './components/Vision';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <AboutPage />
-      <Services />
-      <TeamPage />
-      <CaseStudies />
-      <PortfolioPage />
-      <ContactForm />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path = "/navbar" element = {<Navbar />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/contact" element={<ContactForm />} />
+        <Route path="/vision-mission" element={<Vision />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
