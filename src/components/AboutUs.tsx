@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 const AboutUs = () => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
-    threshold: 0.2,
+    threshold: 0.3,
     triggerOnce: true
   });
 
@@ -53,7 +53,7 @@ const AboutUs = () => {
               className="w-full h-[400px]"
             >
               <img
-                src="/api/placeholder/600/600"
+                src="/images/about 2.jpg"
                 alt="SurgeWing Team"
                 className="rounded-lg shadow-xl w-full h-full object-cover"
               />
@@ -120,7 +120,7 @@ const AboutUs = () => {
               className="w-full h-[400px] order-1 md:order-2"
             >
               <img
-                src="/images/home.jpg"
+                src="/images/about 2.jpg"
                 alt="Our Workspace"
                 className="rounded-lg shadow-xl w-full h-full object-cover"
               />

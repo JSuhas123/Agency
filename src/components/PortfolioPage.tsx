@@ -1,5 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
-import { ArrowRight, Award, Globe, LucideProps, Users } from 'lucide-react';
+import {
+  ArrowRight,
+} from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Navbar from './Navbar';
@@ -77,7 +79,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
   );
 };
 
-const StatsCard = ({ icon: Icon, value, label }: { icon: React.FC<LucideProps>, value: string, label: string }) => (
+/*const StatsCard = ({ icon: Icon, value, label }: { icon: React.FC<LucideProps>, value: string, label: string }) => (
   <motion.div 
     variants={{
       hidden: { opacity: 0, y: 20 },
@@ -93,7 +95,7 @@ const StatsCard = ({ icon: Icon, value, label }: { icon: React.FC<LucideProps>, 
       <p className="text-sm text-zinc-600">{label}</p>
     </div>
   </motion.div>
-);
+);*/
 
 const PortfolioSection = () => {
   const controls = useAnimation();
@@ -110,11 +112,11 @@ const PortfolioSection = () => {
     }
   }, [controls, inView]);
 
-  const stats = [
+  /*const stats = [
     { icon: Globe, value: "50+", label: "Global Clients" },
     { icon: Award, value: "95%", label: "Success Rate" },
     { icon: Users, value: "1M+", label: "Users Reached" },
-  ];
+  ];*/
 
   const caseStudies = [
     {
@@ -212,7 +214,7 @@ const PortfolioSection = () => {
                 />
               </div>
               
-              <motion.div
+              {/*<motion.div
                 variants={{
                   hidden: {},
                   visible: {
@@ -226,7 +228,7 @@ const PortfolioSection = () => {
                 {stats.map((stat, index) => (
                   <StatsCard key={index} {...stat} />
                 ))}
-              </motion.div>
+              </motion.div>*/}
             </div>
 
             <motion.div 

@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion';
-import { Clock, Globe, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Clock, Globe, Mail, Phone, Send } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Navbar from './Navbar';
@@ -10,6 +10,8 @@ const ContactSection = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -24,11 +26,10 @@ const ContactSection = () => {
   }, [controls, inView]);
 
   const contactInfo = [
-    { icon: Phone, text: "+123-456-7890", href: "tel:+1234567890" },
-    { icon: Globe, text: "www.reallygreatsite.com", href: "https://www.reallygreatsite.com" },
-    { icon: Mail, text: "hello@reallygreatsite.com", href: "mailto:hello@reallygreatsite.com" },
-    { icon: MapPin, text: "123 Anywhere ST., Any City, ST 12345", href: "https://maps.google.com" },
-    { icon: Clock, text: "Mon-Fri: 9:00 AM - 6:00 PM", href: null }
+    { icon: Phone, text: "+91 9036329838", href: "tel:+91 9036329838" },
+    { icon: Globe, text: "www.surgewing.com", href: "https://www.surgewing.com" },
+    { icon: Mail, text: "surgewingsolutions@gmail.com", href: "mailto:surgewingsolutions@gmail.com" },
+    { icon: Clock, text: "All Days: 9:00 AM - 9:00 PM", href: null }
   ];
 
   const containerVariants = {
@@ -49,6 +50,80 @@ const ContactSection = () => {
       transition: {
         duration: 0.5
       }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Form validation
+      if (!formData.name || !formData.email || !formData.message) {
+        throw new Error("Please fill in all required fields");
+      }
+
+      // Email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        throw new Error("Please enter a valid email address");
+      }
+
+      // 1. Send email using formData
+      const emailResponse = await fetch('https://api.youremailservice.com/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'surgewingsolutions@gmail.com',
+          from: formData.email,
+          subject: `New contact form submission from ${formData.name}`,
+          message: formData.message,
+          replyTo: formData.email
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        throw new Error("Failed to send email");
+      }
+
+      // 2. Send SMS notification to the phone number
+      const smsResponse = await fetch('https://api.yoursmsservice.com/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: '+919036329838',
+          message: `New contact form submission from ${formData.name} (${formData.email}). Message: ${formData.message.substring(0, 50)}${formData.message.length > 50 ? '...' : ''}`
+        }),
+      });
+
+      if (!smsResponse.ok) {
+        throw new Error("Failed to send SMS notification");
+      }
+
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
+      
+      setSubmitStatus({
+        success: true,
+        message: "Thank you! Your message has been sent successfully."
+      });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus({
+        success: false,
+        message: error.message || "Something went wrong. Please try again later."
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,6 +188,7 @@ const ContactSection = () => {
             <motion.form 
               variants={containerVariants}
               className="space-y-6"
+              onSubmit={handleSubmit}
             >
               <motion.div variants={itemVariants}>
                 <input
@@ -121,6 +197,7 @@ const ContactSection = () => {
                   className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  required
                 />
               </motion.div>
 
@@ -131,6 +208,7 @@ const ContactSection = () => {
                   className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  required
                 />
               </motion.div>
 
@@ -141,16 +219,29 @@ const ContactSection = () => {
                   className="w-full bg-zinc-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300"
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  required
                 />
               </motion.div>
+
+              {submitStatus && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`p-3 rounded-lg ${submitStatus.success ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
+                >
+                  {submitStatus.message}
+                </motion.div>
+              )}
 
               <motion.button
                 variants={itemVariants}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors duration-300 flex items-center justify-center space-x-2"
+                className={`w-full font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 ${isSubmitting ? 'bg-yellow-600 cursor-wait' : 'bg-yellow-400 hover:bg-yellow-500'} text-black transition-colors duration-300`}
+                type="submit"
+                disabled={isSubmitting}
               >
-                <span>Send Message</span>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                 <Send className="w-4 h-4" />
               </motion.button>
             </motion.form>

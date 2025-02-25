@@ -71,7 +71,7 @@ const Vision = () => {
 
         {/* Right Side Image */}
         <div className="md:w-1/4 flex items-center">
-          <img src="/path-to-your-image.jpg" alt="Vision" className="rounded-lg shadow-lg w-full h-auto" />
+          <img src="/images/vision.jpg" alt="Vision" className="rounded-lg shadow-lg w-full h-auto" />
         </div>
       </div>
     </div>
