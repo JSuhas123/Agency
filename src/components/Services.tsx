@@ -22,12 +22,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon: Icon, title, descriptio
     </div>
     <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
     <p className="text-gray-400 mb-4">{description}</p>
-    <motion.button
-      whileHover={{ x: 10 }}
-      className="flex items-center text-yellow-400 font-medium"
-    >
-      Learn More <ArrowRight className="ml-2 w-4 h-4" />
-    </motion.button>
+    <motion.a
+  whileHover={{ x: 10 }}
+  href="/pdf/services.pdf" // Update this with the correct path
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center text-yellow-400 font-medium"
+>
+  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+</motion.a>
   </motion.div>
 );
 

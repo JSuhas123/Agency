@@ -3,7 +3,7 @@ import AboutUs from './components/AboutUs';
 import ContactSection from './components/ContactSection';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
-import PortfolioPage from './components/PortfolioPage';
+//import PortfolioPage from './components/PortfolioPage';
 import Services from './components/Services';
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path = "/navbar" element = {<Navbar />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/contact" element={<ContactSection />} />
       </Routes>
     </BrowserRouter>
