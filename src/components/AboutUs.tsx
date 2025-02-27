@@ -53,7 +53,7 @@ const AboutUs = () => {
               className="w-full h-[400px]"
             >
               <img
-                src="/images/about 2.jpg"
+                src="/images/2.png"
                 alt="SurgeWing Team"
                 className="rounded-lg shadow-xl w-full h-full object-cover"
               />
@@ -107,9 +107,9 @@ const AboutUs = () => {
                 variants={itemVariants}
                 className="text-lg text-gray-700"
               >
-                We believe in the power of AI, creativity, and strategic execution to transform
-                brands into industry leaders. Whether you're a startup looking to establish your
-                presence or a growing business aiming for expansion, our tailored approach
+               We believe in the power of creativity, innovation and strategic execution to transform
+                brands into industry leaders.  Establishing  your
+                presence or growing business aiming for expansion, our tailored approach
                 ensures measurable success. At SurgeWing, we don't just market—we build
                 brands that thrive in the digital age.
               </motion.p>

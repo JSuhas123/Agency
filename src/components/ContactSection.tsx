@@ -11,7 +11,12 @@ const ContactSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  type SubmitStatus = {
+    success: boolean;
+    message: string;
+  } | null;
+
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
 
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -53,80 +58,41 @@ const ContactSection = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
-
+  
     try {
-      // Form validation
       if (!formData.name || !formData.email || !formData.message) {
         throw new Error("Please fill in all required fields");
       }
-
-      // Email format validation
+  
+      // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         throw new Error("Please enter a valid email address");
       }
-
-      // 1. Send email using formData
-      const emailResponse = await fetch('https://api.youremailservice.com/send', {
+  
+      const response = await fetch('https://api.surgewingsolutions.com/send', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: 'surgewingsolutions@gmail.com',
-          from: formData.email,
-          subject: `New contact form submission from ${formData.name}`,
-          message: formData.message,
-          replyTo: formData.email
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
-
-      if (!emailResponse.ok) {
-        throw new Error("Failed to send email");
-      }
-
-      // 2. Send SMS notification to the phone number
-      const smsResponse = await fetch('https://api.yoursmsservice.com/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: '+919036329838',
-          message: `New contact form submission from ${formData.name} (${formData.email}). Message: ${formData.message.substring(0, 50)}${formData.message.length > 50 ? '...' : ''}`
-        }),
-      });
-
-      if (!smsResponse.ok) {
-        throw new Error("Failed to send SMS notification");
-      }
-
-      // Reset form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
-      
-      setSubmitStatus({
-        success: true,
-        message: "Thank you! Your message has been sent successfully."
-      });
+  
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || "Submission failed");
+  
+      setFormData({ name: '', email: '', message: '' });
+      setSubmitStatus({ success: true, message: "Your message has been sent!" });
+  
     } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitStatus({
-        success: false,
-        message: error.message || "Something went wrong. Please try again later."
-      });
+      const errorMessage = error instanceof Error ? error.message : "An error occurred.";
+      setSubmitStatus({ success: false, message: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <>
       <Navbar />

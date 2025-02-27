@@ -135,13 +135,9 @@ const HomePage = () => {
           
           {/* Main Description */}
           <p className="text-gray-700 mb-12 leading-relaxed">
-            At SurgeWing, we redefine digital marketing by integrating business 
-            intelligence, data-driven insights, and AI-powered automation to help 
-            brands scale efficiently. Our strategies go beyond traditional marketing, 
-            leveraging cutting-edge tools to enhance engagement, optimize 
-            campaigns, and maximize conversions. We tailor each approach to fit your 
-            brand's unique needs, ensuring impactful growth in a competitive digital 
-            landscape.
+          At SurgeWing, we revolutionize digital growth by blending creativity, cutting-edge content creation, innovative marketing, and business intelligence.
+From dynamic content strategies and high-impact social media management to seamless web development and data-backed campaign optimization,
+ we craft tailored solutions that drive engagement and conversions. With SurgeWing, your brand doesn’t just grow—it thrives.
           </p>
           
           {/* Two Column Section */}
@@ -149,24 +145,22 @@ const HomePage = () => {
             {/* Business Intelligence Column */}
             <div>
               <h3 className="text-yellow-500 font-medium mb-4">
-                Business Intelligence & Analytics
+                Content Creation & Design
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                We provide data-driven insights to optimize strategies, track market 
-                trends, and enhance decision-making. Our analytics ensure real-
-                time reporting, predictive insights, and measurable growth.
+              We craft compelling visuals, copy, and multimedia content that enhance brand identity and engagement. 
+              Our designs are tailored to captivate audiences and drive results.
               </p>
             </div>
             
             {/* Innovative Marketing Column */}
             <div>
               <h3 className="text-yellow-500 font-medium mb-4">
-                Innovative Marketing & Growth
+                Web & E-Commerce Development
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                We craft data-driven marketing campaigns that drive 
-                engagement, conversions, and brand growth. Our strategies 
-                leverage consumer insights to maximize impact.
+              We build high-performing websites and e-commerce platforms optimized for user experience, speed, and conversions. 
+              Our solutions ensure seamless navigation and scalable growth.
               </p>
             </div>
           </div>
@@ -176,13 +170,64 @@ const HomePage = () => {
         <div className="w-1/2 relative">
           <div className="absolute inset-0 bg-black">
             <img 
-              src="/images/dm.jpg" 
+              src="/images/dm1.jpg" 
               alt="Modern Architecture"
               className="w-full h-full object-cover grayscale"
             />
           </div>
         </div>
       </div>
+
+      <div className="min-h-screen bg-white flex">
+  {/* Left Image Section */}
+  <div className="w-1/2 relative">
+    <div className="absolute inset-0 bg-black">
+      <img 
+        src="/images/dm1.jpg" 
+        alt="Modern Architecture"
+        className="w-full h-full object-cover grayscale"
+      />
+    </div>
+  </div>
+  
+  {/* Right Content Section */}
+  <div className="w-1/2 p-16 flex flex-col justify-center">
+    {/* Orange Accent Line */}
+    <div className="w-16 h-1 bg-yellow-500 mb-6"></div>
+    {/* Main Description */}
+    <p className="text-gray-700 mb-12 leading-relaxed">
+    At SurgeWing, we revolutionize digital growth by blending creativity, cutting-edge content creation, innovative marketing, and business intelligence.
+From dynamic content strategies and high-impact social media management to seamless web development and data-backed campaign optimization,
+ we craft tailored solutions that drive engagement and conversions. With SurgeWing, your brand doesn’t just grow—it thrives.
+    </p>
+    {/* Two Column Section */}
+    <div className="grid grid-cols-2 gap-8">
+      {/* Business Intelligence Column */}
+      <div>
+        <h3 className="text-yellow-500 font-medium mb-4">
+          Business Intelligence & Analytics
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          We provide data-driven insights to optimize strategies, track market 
+          trends, and enhance decision-making. Our analytics ensure real-
+          time reporting, predictive insights, and measurable growth.
+        </p>
+      </div>
+      
+      {/* Innovative Marketing Column */}
+      <div>
+        <h3 className="text-yellow-500 font-medium mb-4">
+          Innovative Marketing & Growth
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          We craft data-driven marketing campaigns that drive 
+          engagement, conversions, and brand growth. Our strategies 
+          leverage consumer insights to maximize impact.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
       {/* Vision Section */}
       <div className="min-h-screen bg-white">
