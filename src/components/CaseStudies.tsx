@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+/*import { ArrowRight } from 'lucide-react';
 
 const caseStudies = [
   {
@@ -59,4 +59,4 @@ export default function CaseStudies() {
       </div>
     </section>
   );
-}
+}*/

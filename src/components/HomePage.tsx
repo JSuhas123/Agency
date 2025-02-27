@@ -4,7 +4,7 @@ import React from 'react';
 import AboutUs from './AboutUs';
 import ContactSection from './ContactSection';
 import Navbar from './Navbar';
-import PortfolioPage from './PortfolioPage';
+//import PortfolioPage from './PortfolioPage';
 
 const HomePage = () => {
   
@@ -183,7 +183,7 @@ From dynamic content strategies and high-impact social media management to seaml
   <div className="w-1/2 relative">
     <div className="absolute inset-0 bg-black">
       <img 
-        src="/images/dm1.jpg" 
+        src="/images/dm.jpg" 
         alt="Modern Architecture"
         className="w-full h-full object-cover grayscale"
       />
@@ -269,8 +269,6 @@ From dynamic content strategies and high-impact social media management to seaml
 </div>
         </div>
       </div>
-      <PortfolioPage />
-      {/* Contact Section */}
       <ContactSection />
     </div>
   );

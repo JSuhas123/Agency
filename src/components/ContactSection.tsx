@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion';
-import { Clock, Globe, Mail, Phone, Send } from 'lucide-react';
+import { Clock, Eye, Globe, Mail, Phone, Send } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Navbar from './Navbar';
@@ -11,6 +11,8 @@ const ContactSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [visitorCount, setVisitorCount] = useState(1);
+  
   type SubmitStatus = {
     success: boolean;
     message: string;
@@ -29,6 +31,20 @@ const ContactSection = () => {
       controls.start('visible');
     }
   }, [controls, inView]);
+
+  // Simulate loading visitor count from storage or API
+  useEffect(() => {
+    // In a real implementation, you'd fetch this from your backend or analytics
+    const storedCount = localStorage.getItem('visitorCount');
+    if (storedCount) {
+      setVisitorCount(parseInt(storedCount, 10));
+    } else {
+      // Generate random number between 1000-5000 for demonstration
+      const randomCount = Math.floor(Math.random() * 4000) + 1000;
+      setVisitorCount(randomCount);
+      localStorage.setItem('visitorCount', randomCount.toString());
+    }
+  }, []);
 
   const contactInfo = [
     { icon: Phone, text: "+91 9036329838", href: "tel:+91 9036329838" },
@@ -93,10 +109,11 @@ const ContactSection = () => {
       setIsSubmitting(false);
     }
   };
+  
   return (
     <>
       <Navbar />
-      <section ref={ref} className="container mx-auto px-6 py-24" id="contact">
+      <section ref={ref} className="container mx-auto px-6 py-24 relative" id="contact">
         <motion.div
           initial="hidden"
           animate={controls}
@@ -212,6 +229,17 @@ const ContactSection = () => {
               </motion.button>
             </motion.form>
           </motion.div>
+        </motion.div>
+        
+        {/* Visitor Counter - positioned at bottom right */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          whileHover={{ opacity: 1 }}
+          className="absolute bottom-4 right-6 flex items-center space-x-1 text-xs text-gray-400 bg-zinc-900/70 px-2 py-1 rounded-full"
+        >
+          <Eye className="w-3 h-3" />
+          <span>{visitorCount.toLocaleString()} visitors</span>
         </motion.div>
       </section>
     </>

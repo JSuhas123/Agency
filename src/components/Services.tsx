@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, BarChart, Code, Globe, Palette, Zap } from 'lucide-react';
+import { ArrowRight, BarChart, Code, FileText, Globe, TrendingUp, Zap } from 'lucide-react';
 import React from 'react';
 import Navbar from './Navbar';
 
@@ -42,50 +42,40 @@ const Services = () => {
     {
       icon: Code,
       title: "Content Creation & Design",
-      description: "Blends compelling story-telling with visually engaging elements to captivat.",
+      description: "Blends compelling story-telling with visually engaging elements to create impactful brand experiences.",
       delay: 0.3
     },
     {
       icon: BarChart,
       title: "Innovative Marketing & Growth",
-      description: "Advanced tracking implementation, custom dashboards, and continuous optimization strategies.",
+      description: "Leveraging creativity, data and technology to drive smarter strategies, enhance engagement , hence accelerating sustainable brand growth.",
       delay: 0.4
     },
     {
       icon: Globe,
       title: "Web Design & Development",
-      description: "Comprehensive SEO audits, content planning, and execution to improve organic visibility.",
+      description: "Creating seamless, visually engaging and high performance digital experiences that drive user engagement and business growth.",
       delay: 0.5
     },
     {
-      icon: Palette,
+      icon: TrendingUp, // Represents growth and strategy
       title: "Branding & Strategy",
-      description: "Strategic brand positioning, visual identity design, and brand voice development.",
+      description: "Creating a unique identity that resonates with your audience, while strategy ensures meaningful growth. Together they build a powerful market presence.",
       delay: 0.6
     },
     {
-      icon: Palette,
+      icon: FileText, // Represents content creation and marketing
       title: "Content Marketing",
-      description: "Creating valuabe content to attract, engage and retain audience.",
+      description: "Using valuable content to attract, engage, and grow your audience, boosting awareness, trust, and impact.",
       delay: 0.7
     },
    
   ];
 
   return (
-    <div className="min-h-screen bg-black relative">
-      {/* Background image with opacity */}
-      <div 
-  className="absolute inset-0 bg-black"
-  style={{
-    backgroundImage: `url('/images/dm.jpg')`, // ✅ Corrected with url()
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    opacity: 0.2, // Adjust opacity as needed
-    mixBlendMode: 'overlay',
-  }}
-></div>
-
+    <div className="min-h-screen relative bg-black">
+    {/* Background Image with Tailwind */}
+    <div className="absolute inset-0 bg-[url('/images/laptop.jpg')] bg-cover bg-center opacity-40"></div>
       {/* Content with relative positioning to appear above background */}
       <div className="relative z-10">
         <Navbar />

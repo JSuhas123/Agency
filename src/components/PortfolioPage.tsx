@@ -1,4 +1,4 @@
-import { motion, useAnimation } from 'framer-motion';
+/*import { motion, useAnimation } from 'framer-motion';
 import {
   ArrowRight,
 } from 'lucide-react';
@@ -95,7 +95,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
       <p className="text-sm text-zinc-600">{label}</p>
     </div>
   </motion.div>
-);*/
+);
 
 const PortfolioSection = () => {
   const controls = useAnimation();
@@ -116,7 +116,7 @@ const PortfolioSection = () => {
     { icon: Globe, value: "50+", label: "Global Clients" },
     { icon: Award, value: "95%", label: "Success Rate" },
     { icon: Users, value: "1M+", label: "Users Reached" },
-  ];*/
+  ];
 
   const caseStudies = [
     {
@@ -228,7 +228,7 @@ const PortfolioSection = () => {
                 {stats.map((stat, index) => (
                   <StatsCard key={index} {...stat} />
                 ))}
-              </motion.div>*/}
+              </motion.div>}
             </div>
 
             <motion.div 
@@ -245,4 +245,4 @@ const PortfolioSection = () => {
   );
 };
 
-export default PortfolioSection;
+export default PortfolioSection;*/
