@@ -2,7 +2,6 @@ import { motion, useAnimation } from 'framer-motion';
 import { Clock, Eye, Globe, Mail, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Navbar from './Navbar';
 
 const ContactSection = () => {
   const [visitorCount, setVisitorCount] = useState(1);
@@ -21,16 +20,14 @@ const ContactSection = () => {
 
   // Simulate loading visitor count from storage or API
   useEffect(() => {
-    // In a real implementation, you'd fetch this from your backend or analytics
+    // Get the current count from localStorage
     const storedCount = localStorage.getItem('visitorCount');
-    if (storedCount) {
-      setVisitorCount(parseInt(storedCount, 10));
-    } else {
-      // Generate random number between 1000-5000 for demonstration
-      const randomCount = Math.floor(Math.random() * 4000) + 1000;
-      setVisitorCount(randomCount);
-      localStorage.setItem('visitorCount', randomCount.toString());
-    }
+    const currentCount = storedCount ? parseInt(storedCount, 10) : 0;
+
+    // Increment count on every page load
+    const newCount = currentCount + 1;
+    localStorage.setItem('visitorCount', newCount.toString());
+    setVisitorCount(newCount);
   }, []);
 
   const contactInfo = [
@@ -62,8 +59,6 @@ const ContactSection = () => {
   };
   
   return (
-    <>
-      <Navbar />
       <section ref={ref} className="container mx-auto px-6 py-24 relative" id="contact">
         <motion.div
           initial="hidden"
@@ -119,7 +114,6 @@ const ContactSection = () => {
           <span>{visitorCount.toLocaleString()} visitors</span>
         </motion.div>
       </section>
-    </>
   );
 };
 
