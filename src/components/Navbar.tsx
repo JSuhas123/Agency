@@ -15,28 +15,39 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add event listener to close menu when screen size changes to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMenuOpen]);
+
   const menuItems = [
     { label: 'Home', href: '/' },
     { label: 'Service', href: '/services' },
     { label: 'About Us', href: '/about' },
-   // { label: 'Portfolio', href: '/portfolio' },
+    // { label: 'Portfolio', href: '/portfolio' },
     { label: 'Contact', href: '/contact' }
   ];
 
   return (
-<nav className={`fixed w-full z-50 transition-all duration-300 bg-black ${scrolled ? 'bg-black/80 backdrop-blur-lg' : ''}`}>
-<div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+    <nav className={`fixed w-full z-50 transition-all duration-300 bg-black ${scrolled ? 'bg-black/80 backdrop-blur-lg' : ''}`}>
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           <Link to="/" className="flex items-center">
             <motion.div 
-              className="w-6 h-6 bg-yellow-400 rotate-45"
+              className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-400 rotate-45"
               whileHover={{ rotate: 90 }}
               transition={{ duration: 0.3 }}
             />
-            <span className="ml-2 text-white text-sm">surgewing company</span>
+            <span className="ml-2 text-white text-xs sm:text-sm">surgewing company</span>
           </Link>
 
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-4 lg:space-x-8">
             {menuItems.map((item, index) => (
               <Link
                 key={index}
@@ -59,8 +70,9 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
-            {isMenuOpen ? <X /> : <Menu />}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </motion.button>
         </div>
 
@@ -71,23 +83,27 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
+              style={{ overflow: 'hidden' }}
             >
-              {menuItems.map((item, index) => (
-                <Link
-                  key={index}
-                  to={item.href}
-                  className="block px-6 py-3 text-white hover:text-yellow-400 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <motion.span
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
+              <div className="py-2">
+                {menuItems.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    className="block px-4 py-3 text-white hover:text-yellow-400 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    {item.label}
-                  </motion.span>
-                </Link>
-              ))}
+                    <motion.span
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="inline-block w-full"
+                    >
+                      {item.label}
+                    </motion.span>
+                  </Link>
+                ))}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
