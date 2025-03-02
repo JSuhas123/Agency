@@ -1,6 +1,7 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import Navbar from './Navbar';
 
 const AboutUs = () => {
   const controls = useAnimation();
@@ -37,6 +38,7 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Navbar />
       <div ref={ref} className="container mx-auto px-4 sm:px-6 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
         <motion.div
           initial="hidden"

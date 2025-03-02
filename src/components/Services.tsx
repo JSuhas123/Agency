@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart, Code, FileText, Globe, TrendingUp, Zap } from 'lucide-react';
 import React from 'react';
+import Navbar from './Navbar';
 
 
 interface ServiceCardProps {
@@ -76,7 +77,9 @@ const Services = () => {
   ];
 
   return (
+  
     <div className="min-h-screen relative bg-black">
+    <Navbar />
     {/* Background Image with Tailwind */}
     <div className="absolute inset-0 bg-[url('/images/laptop.jpg')] bg-cover bg-center opacity-40"></div>
       {/* Content with relative positioning to appear above background */}
