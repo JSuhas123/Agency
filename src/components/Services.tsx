@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart, Code, FileText, Globe, TrendingUp, Zap } from 'lucide-react';
 import React from 'react';
-import Navbar from './Navbar';
+
 
 interface ServiceCardProps {
   icon: React.ComponentType<{ className?: string }>;
@@ -81,7 +81,6 @@ const Services = () => {
     <div className="absolute inset-0 bg-[url('/images/laptop.jpg')] bg-cover bg-center opacity-40"></div>
       {/* Content with relative positioning to appear above background */}
       <div className="relative z-10">
-        <Navbar />
         
         <div className="container mx-auto px-6 pt-32 pb-16">
           <motion.div

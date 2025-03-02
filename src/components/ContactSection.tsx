@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 const ContactSection = () => {
-  const [visitorCount, setVisitorCount] = useState(1);
+  const [visitorCount, setVisitorCount] = useState(0);
   
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -18,16 +18,18 @@ const ContactSection = () => {
     }
   }, [controls, inView]);
 
-  // Simulate loading visitor count from storage or API
   useEffect(() => {
-    // Get the current count from localStorage
-    const storedCount = localStorage.getItem('visitorCount');
-    const currentCount = storedCount ? parseInt(storedCount, 10) : 0;
-
-    // Increment count on every page load
-    const newCount = currentCount + 1;
-    localStorage.setItem('visitorCount', newCount.toString());
-    setVisitorCount(newCount);
+    // Retrieve the current visitor count from localStorage
+    let currentCount = parseInt(localStorage.getItem('visitorCount') || '0', 10);
+    
+    // Increment count
+    currentCount++;
+    
+    // Update localStorage
+    localStorage.setItem('visitorCount', currentCount.toString());
+    
+    // Update state
+    setVisitorCount(currentCount);
   }, []);
 
   const contactInfo = [
@@ -66,7 +68,6 @@ const ContactSection = () => {
           variants={containerVariants}
           className="flex justify-center"
         >
-          {/* Centered Contact Information */}
           <motion.div
             variants={itemVariants}
             className="bg-zinc-900 p-8 rounded-lg shadow-xl max-w-2xl w-full"
