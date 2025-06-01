@@ -15,7 +15,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Add event listener to close menu when screen size changes to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && isMenuOpen) {
@@ -29,16 +28,18 @@ const Navbar = () => {
   const menuItems = [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },
+    { label: 'AI Marketing', href: '/ai-marketing' },
+    { label: 'Blog', href: '/blog' },
     { label: 'About Us', href: '/about' },
-    // { label: 'Portfolio', href: '/portfolio' },
+    { label: 'Portfolio', href: '/portfolio' },
     { label: 'Contact', href: '/contact' }
   ];
 
   return (
-    <nav className={`fixed top-0 left -0 w-full z-50 transition-all duration-300 bg-black ${scrolled ? 'bg-black/80 backdrop-blur-lg' : ''}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-black ${scrolled ? 'bg-black/80 backdrop-blur-lg' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" aria-label="Surgewing Homepage">
             <motion.div 
               className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-400 rotate-45"
               whileHover={{ rotate: 90 }}
@@ -47,7 +48,7 @@ const Navbar = () => {
             <span className="ml-2 text-white text-xs sm:text-sm">surgewing company</span>
           </Link>
 
-          <div className="hidden md:flex space-x-4 lg:space-x-8">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
             {menuItems.map((item, index) => (
               <Link
                 key={index}
@@ -63,6 +64,10 @@ const Navbar = () => {
                 />
               </Link>
             ))}
+
+            <Link to="/ai-audit" className="ml-4 px-4 py-2 bg-yellow-400 text-black rounded-full text-sm font-semibold hover:bg-yellow-300 transition-colors">
+              Get AI Audit
+            </Link>
           </div>
 
           <motion.button
@@ -103,6 +108,14 @@ const Navbar = () => {
                     </motion.span>
                   </Link>
                 ))}
+
+                <Link
+                  to="/ai-audit"
+                  className="block px-4 py-3 text-yellow-400 font-semibold"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Get AI Audit
+                </Link>
               </div>
             </motion.div>
           )}
