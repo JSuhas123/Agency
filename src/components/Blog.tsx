@@ -1,6 +1,5 @@
 import { ArrowRight, BookOpen, Calendar, ChevronLeft, ChevronRight, Clock, ExternalLink, Filter, Linkedin, Mail, Search, Tag, Users } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
-//import SEO from './SEO';
 import Navbar from './Navbar';
 
 

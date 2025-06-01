@@ -284,7 +284,7 @@ const AIMarketing: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <Link to="/ai-audit">
+              <Link to="/">
                 <button className="group bg-yellow-400 text-black font-bold px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span>Start Your AI Journey</span>

@@ -108,14 +108,14 @@ const Navbar = () => {
                     </motion.span>
                   </Link>
                 ))}
-
+                {/*}
                 <Link
                   to="/ai-audit"
                   className="block px-4 py-3 text-yellow-400 font-semibold"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Get AI Audit
-                </Link>
+                </Link>*/}
               </div>
             </motion.div>
           )}

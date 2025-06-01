@@ -1,4 +1,4 @@
-import { ArrowRightIcon, BarChartIcon, CheckIcon, ClockIcon, CogIcon, GroupIcon, HelpCircle, LightbulbIcon, Minus, Plus, ShieldCheckIcon, StarIcon } from 'lucide-react';
+{/*import { ArrowRightIcon, BarChartIcon, CheckIcon, ClockIcon, CogIcon, GroupIcon, HelpCircle, LightbulbIcon, Minus, Plus, ShieldCheckIcon, StarIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 
@@ -230,7 +230,7 @@ const AiAuditPage = () => {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
         <Navbar />
-      {/* Hero Section */}
+      {/* Hero Section *}
       <section className="relative bg-gradient-to-br from-yellow-400 via-orange-400 to-red-500 py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-black/5"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full -translate-x-48 -translate-y-48 animate-pulse"></div>
@@ -268,7 +268,7 @@ const AiAuditPage = () => {
             </button>
           </div>
 
-          {/* Stats Row */}
+          {/* Stats Row *}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
               <div key={index} className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
@@ -281,7 +281,7 @@ const AiAuditPage = () => {
         </div>
       </section>
 
-      {/* What's Included Section */}
+      {/* What's Included Section *}
       <section className="py-24 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -330,7 +330,7 @@ const AiAuditPage = () => {
         </div>
       </section>
 
-      {/* Social Proof Section */}
+      {/* Social Proof Section *}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -367,7 +367,7 @@ const AiAuditPage = () => {
         </div>
       </section>
 
-      {/* Enhanced Form Section */}
+      {/* Enhanced Form Section *}
       <section id="audit-form" className="py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-30" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
@@ -597,9 +597,9 @@ const AiAuditPage = () => {
           )}
         </div>
       </section>
-      {/* FAQ Section */}   
+      {/* FAQ Section *}   
         <section className="relative py-24 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 overflow-hidden">
-      {/* Background Elements */}
+      {/* Background Elements *}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-indigo-500 rounded-full blur-3xl"></div>
@@ -607,7 +607,7 @@ const AiAuditPage = () => {
       </div>
 
       <div className="relative max-w-4xl mx-auto">
-        {/* Header */}
+        {/* Header *}
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-6 shadow-lg">
             <HelpCircle className="w-8 h-8 text-white" />
@@ -621,7 +621,7 @@ const AiAuditPage = () => {
           </p>
         </div>
 
-        {/* FAQ Items */}
+        {/* FAQ Items *}
         <div className="space-y-4">
           {faqData.map((item, index) => (
             <div 
@@ -630,7 +630,7 @@ const AiAuditPage = () => {
                 openFAQ === index ? 'bg-white/90 shadow-2xl scale-[1.02]' : 'hover:bg-white/80'
               }`}
             >
-              {/* Gradient Border Effect */}
+              {/* Gradient Border Effect *}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
               
               <div className="relative p-8">
@@ -651,7 +651,7 @@ const AiAuditPage = () => {
                   </div>
                 </button>
 
-                {/* Answer with smooth animation */}
+                {/* Answer with smooth animation *}
                 <div className={`transition-all duration-500 ease-in-out ${
                   openFAQ === index 
                     ? 'max-h-96 opacity-100 mt-6' 
@@ -668,7 +668,7 @@ const AiAuditPage = () => {
           ))}
         </div>
 
-        {/* Contact CTA */}
+        {/* Contact CTA *}
         <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer">
             <HelpCircle className="w-5 h-5" />
@@ -680,4 +680,4 @@ const AiAuditPage = () => {
     </div>
   );
 }
-export default AiAuditPage;
+export default AiAuditPage;*/}
