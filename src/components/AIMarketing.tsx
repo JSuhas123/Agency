@@ -14,13 +14,13 @@ import {
   Rocket,
   Shield,
   Sparkles,
-  Star,
   Target,
   TrendingUp,
   Users,
   Zap
 } from 'lucide-react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
 
@@ -31,14 +31,6 @@ interface Benefit {
   title: string;
   description: string;
   gradient: string;
-}
-
-interface Tool {
-  name: string;
-  description: string;
-  category: string;
-  rating: number;
-  features: string[];
 }
 
 interface UseCase {
@@ -114,36 +106,7 @@ const AIMarketing: React.FC = () => {
     }
   ];
 
-  const tools: Tool[] = [
-    {
-      name: "HubSpot AI",
-      description: "Comprehensive CRM with AI-powered lead scoring, content optimization, and predictive analytics.",
-      category: "All-in-One Platform",
-      rating: 4.8,
-      features: ["Lead Scoring", "Content AI", "Predictive Analytics", "Chatbots"]
-    },
-    {
-      name: "Salesforce Einstein",
-      description: "Advanced AI suite for customer relationship management, sales forecasting, and marketing automation.",
-      category: "Enterprise CRM",
-      rating: 4.7,
-      features: ["Einstein Analytics", "Lead Scoring", "Email Insights", "Commerce AI"]
-    },
-    {
-      name: "Marketo Engage",
-      description: "Marketing automation platform with AI-driven campaign optimization and customer journey mapping.",
-      category: "Marketing Automation",
-      rating: 4.6,
-      features: ["Journey Orchestration", "Predictive Content", "AI Chatbots", "Attribution"]
-    },
-    {
-      name: "Jasper AI",
-      description: "AI-powered content creation tool for generating high-quality marketing copy, blogs, and social media content.",
-      category: "Content Creation",
-      rating: 4.9,
-      features: ["Content Generation", "Brand Voice", "Templates", "SEO Optimization"]
-    }
-  ];
+  
 
   const useCases: UseCase[] = [
     {
@@ -248,44 +211,6 @@ const AIMarketing: React.FC = () => {
       </div>
   );
 
-  const ToolCard: React.FC<Tool> = ({ 
-      name, 
-      description, 
-      category, 
-      rating, 
-      features 
-    }) => (
-      <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group">
-        <div className="flex justify-between items-start mb-6">
-          <div>
-            <span className="px-3 py-1 bg-yellow-100 text-yellow-400 text-sm font-medium rounded-full">
-              {category}
-            </span>
-            <h3 className="text-2xl font-bold text-gray-900 mt-3 group-hover:text-yellow-400 transition-colors">
-              {name}
-            </h3>
-          </div>
-          <div className="flex items-center gap-1">
-            <Star className="w-5 h-5 text-yellow-400 fill-current" />
-            <span className="text-gray-600 font-medium">{rating}</span>
-          </div>
-        </div>
-        
-        <p className="text-gray-600 mb-6 leading-relaxed">{description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
-          {features.map((feature: string, index: number) => (
-            <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-              {feature}
-            </span>
-          ))}
-        </div>
-        
-        <button className="w-full bg-gradient-to-r from-yellow-400  text-white font-semibold py-3 rounded-xl hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-          Learn More
-        </button>
-      </div>
-  );
 
   const UseCaseCard: React.FC<UseCase> = ({ 
     industry, 
@@ -324,7 +249,7 @@ const AIMarketing: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen  bg-black relative overflow-hidden">
       <Navbar />
       {/* Animated Background */}
       <div className="fixed inset-0 z-0">
@@ -342,7 +267,6 @@ const AIMarketing: React.FC = () => {
               <Brain className="w-4 h-4 text-yellow-400" />
               <span className="text-white/90 text-sm font-medium">Next-Generation Marketing</span>
             </div>
-
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-none">
               <span className="text-white block mb-2">AI-Powered</span>
               <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-clip-text text-transparent">
@@ -360,13 +284,15 @@ const AIMarketing: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <button className="group bg-yellow-400  text-black font-bold px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300">
-                <div className="flex items-center gap-3">
-                  <span>Start Your AI Journey</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
-              
+              <Link to="/ai-audit">
+                <button className="group bg-yellow-400 text-black font-bold px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <span>Start Your AI Journey</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+              </Link>
+   
               <button className="group flex items-center gap-3 px-8 py-4 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300">
                 <PlayCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span>Watch Demo</span>
@@ -455,26 +381,6 @@ const AIMarketing: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit: Benefit, index: number) => (
               <BenefitCard key={index} {...benefit} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tools Section */}
-      <section className="relative z-10 py-24 px-4 sm:px-6 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Popular <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">AI Marketing Tools</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Explore the leading AI-powered platforms that are transforming how businesses approach marketing and customer engagement.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {tools.map((tool: Tool, index: number) => (
-              <ToolCard key={index} {...tool} />
             ))}
           </div>
         </div>
@@ -584,12 +490,14 @@ const AIMarketing: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+            <Link to="/ai-audit">
             <button className="group bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300">
               <div className="flex items-center gap-3">
                 <span>Get Free AI Marketing Audit</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </div>
             </button>
+            </Link>
             
             <button className="group flex items-center gap-3 px-8 py-4 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300">
               <Download className="w-5 h-5 group-hover:scale-110 transition-transform" />

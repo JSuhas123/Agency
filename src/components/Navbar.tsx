@@ -31,7 +31,7 @@ const Navbar = () => {
     { label: 'AI Marketing', href: '/ai-marketing' },
     { label: 'Blog', href: '/blog' },
     { label: 'About Us', href: '/about' },
-    { label: 'Portfolio', href: '/portfolio' },
+   // { label: 'Portfolio', href: '/portfolio' },
     { label: 'Contact', href: '/contact' }
   ];
 
@@ -64,10 +64,10 @@ const Navbar = () => {
                 />
               </Link>
             ))}
-
+            {/*}
             <Link to="/ai-audit" className="ml-4 px-4 py-2 bg-yellow-400 text-black rounded-full text-sm font-semibold hover:bg-yellow-300 transition-colors">
               Get AI Audit
-            </Link>
+            </Link>*/}
           </div>
 
           <motion.button

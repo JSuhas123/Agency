@@ -186,7 +186,7 @@ const Blog: React.FC<BlogProps> = ({
                   placeholder="Search articles, topics, or tags..."
                   value={searchTerm}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200"
                 />
               </div>
 
@@ -199,7 +199,7 @@ const Blog: React.FC<BlogProps> = ({
                     onClick={() => handleCategoryChange(category)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                       selectedCategory === category
-                        ? 'bg-yellow-600 text-white shadow-lg'
+                        ? 'bg-yellow-400 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
@@ -353,7 +353,7 @@ const Blog: React.FC<BlogProps> = ({
                   </p>
                   
                   <a 
-                    href={linkedinUrl}
+                    href="https://www.linkedin.com/company/surgewing/?viewAsMember=true"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-200 flex items-center gap-2 group w-fit"
@@ -394,7 +394,7 @@ const Blog: React.FC<BlogProps> = ({
           </section>
 
           {/* Newsletter CTA */}
-          <section className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-8 md:p-12 text-white text-center relative overflow-hidden">
+          <section className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-8 md:p-12 text-white text-center relative overflow-hidden">
             <div className="relative z-10">
               <div className="bg-white bg-opacity-20 p-4 rounded-xl w-fit mx-auto mb-6">
                 <Mail className="w-12 h-12" />
@@ -417,13 +417,13 @@ const Blog: React.FC<BlogProps> = ({
                 />
                 <button 
                   type="submit"
-                  className="bg-white text-purple-600 px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200 whitespace-nowrap"
+                  className="bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200 whitespace-nowrap"
                 >
                   Subscribe Now
                 </button>
               </form>
               
-              <p className="text-sm text-purple-200 mt-4">
+              <p className="text-sm text-white-200 mt-4">
                 No spam, unsubscribe at any time. We respect your privacy.
               </p>
             </div>
