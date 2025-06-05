@@ -28,29 +28,31 @@ const Forms = () => {
   
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string>('');
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
-  // Load reCAPTCHA script
+  // Load reCAPTCHA script only if not already present
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://www.google.com/recaptcha/api.js';
-      (window.grecaptcha as Grecaptcha)?.ready(() => {
-        // reCAPTCHA is ready
-      });
-
-    // Initialize reCAPTCHA when script loads
-    script.onload = () => {
-      (window.grecaptcha as Grecaptcha).ready(() => {
-        // reCAPTCHA is ready
-      });
-    };
-
-    return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
+    if (!document.querySelector('script[src="https://www.google.com/recaptcha/api.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        if (window.grecaptcha && typeof window.grecaptcha.ready === 'function') {
+          window.grecaptcha.ready(() => {
+            // reCAPTCHA is ready
+          });
+        }
+      };
+      document.head.appendChild(script);
+      return () => {
+        if (document.head.contains(script)) {
+          document.head.removeChild(script);
+        }
+      };
+    }
   }, []);
 
   const handleInputChange = (e) => {
@@ -61,7 +63,7 @@ const Forms = () => {
     }));
   };
 
-  const handleCaptchaChange = (token) => {
+  const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
@@ -145,11 +147,7 @@ const Forms = () => {
     }
   };
   // Custom reCAPTCHA component using react-google-recaptcha
-  const RECAPTCHA_SITE_KEY = '6Lf9lVYrAAAAAAAKTFd22AC2LLXjj_7PmwxVrAdW'; // Replace with your actual site key
-
-  // State setter for captcha error
-  const [captchaError, setCaptchaError] = useState<string>('');
-
+  const RECAPTCHA_SITE_KEY = '6Lf9lVYrAAAAAAAKTFd22AC2LLXjj_7PmwxVrAdW'; 
   // ReCaptcha component moved outside Forms and receives handlers as props
   type ReCaptchaProps = {
     siteKey: string;
@@ -373,26 +371,7 @@ const Forms = () => {
                   placeholder="Describe your main challenges, bottlenecks, or areas where you want to improve efficiency..."
                 />
               </div>
-                    <ReCaptcha
-                      siteKey={RECAPTCHA_SITE_KEY}
-                      onChange={handleCaptchaChange}
-                      onExpired={handleCaptchaExpired}
-                      onErrored={handleCaptchaError}
-                      recaptchaRef={recaptchaRef}
-                    />
-              <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-2xl p-6">
-                <h4 className="text-yellow-400 font-bold mb-2">🎯 What You'll Get:</h4>
-                <div className="text-yellow-200 space-y-1 text-sm">
-                  <div>✅ Custom AI opportunity assessment (₹2,90,000 value)</div>
-                  <div>✅ ROI projections for automation (₹1,65,000 value)</div>
-                  <div>✅ 90-day AI implementation roadmap (₹3,30,000 value)</div>
-                  <div>✅ Risk assessment and mitigation strategies (₹1,25,000 value)</div>
-                  <div>✅ Team readiness evaluation and training plan (₹2,10,000 value)</div>
-                  <div>✅ Priority implementation plan with timelines (₹2,50,000 value)</div>
-                </div>
-              </div>
-
-              {/* reCAPTCHA Section */}
+              {/* Only ONE reCAPTCHA below */}
               <div className="space-y-4">
                 <div className="flex justify-center">
                   <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
@@ -410,6 +389,18 @@ const Forms = () => {
                     {captchaError}
                   </div>
                 )}
+              </div>
+
+              <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-2xl p-6">
+                <h4 className="text-yellow-400 font-bold mb-2">🎯 What You'll Get:</h4>
+                <div className="text-yellow-200 space-y-1 text-sm">
+                  <div>✅ Custom AI opportunity assessment (₹2,90,000 value)</div>
+                  <div>✅ ROI projections for automation (₹1,65,000 value)</div>
+                  <div>✅ 90-day AI implementation roadmap (₹3,30,000 value)</div>
+                  <div>✅ Risk assessment and mitigation strategies (₹1,25,000 value)</div>
+                  <div>✅ Team readiness evaluation and training plan (₹2,10,000 value)</div>
+                  <div>✅ Priority implementation plan with timelines (₹2,50,000 value)</div>
+                </div>
               </div>
 
               <div className="flex items-center justify-between mt-6">
