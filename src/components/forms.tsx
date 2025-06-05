@@ -218,7 +218,8 @@ const Forms = () => {
             </button>
           </div>
         ) : (
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl p-8 rounded-3xl">
+          // Add inert attribute if you ever want to hide this form from interaction
+          <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl p-8 rounded-3xl" /* inert={showSuccess ? "true" : undefined} */>
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
