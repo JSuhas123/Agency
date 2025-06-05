@@ -6,12 +6,10 @@ import {
   Clock,
   Download,
   Eye,
-  Globe,
   Lightbulb,
   LucideIcon,
   MessageSquare,
   PlayCircle,
-  Rocket,
   Shield,
   Sparkles,
   Target,
@@ -39,7 +37,7 @@ interface UseCase {
   challenge: string;
   solution: string;
   result: string;
-  icon: LucideIcon;
+  logo: string;
 }
 
 interface Step {
@@ -110,29 +108,29 @@ const AIMarketing: React.FC = () => {
 
   const useCases: UseCase[] = [
     {
-      industry: "E-commerce",
-      company: "Fashion Forward",
-      challenge: "Low conversion rates and high cart abandonment",
-      solution: "Implemented AI-powered product recommendations and dynamic pricing",
-      result: "45% increase in conversion rate, 30% reduction in cart abandonment",
-      icon: Globe
-    },
-    {
-      industry: "SaaS",
-      company: "TechStart Pro",
-      challenge: "Difficulty identifying high-value leads from marketing qualified leads",
-      solution: "Deployed predictive lead scoring and automated nurture campaigns",
-      result: "60% improvement in lead quality, 35% faster sales cycle",
-      icon: Rocket
-    },
-    {
-      industry: "Retail",
-      company: "Urban Style",
-      challenge: "Generic email campaigns with low engagement rates",
-      solution: "Launched AI-driven personalized email campaigns with dynamic content",
-      result: "250% increase in email engagement, 80% boost in click-through rates",
-      icon: Target
-    }
+    industry: "E-commerce",
+    company: "ASOS",
+    challenge: "Low conversion rates and high cart abandonment",
+    solution: "Leveraged AI for personalized product recommendations and dynamic pricing models using machine learning algorithms.",
+    result: "35% increase in average order value and 20% reduction in cart abandonment rate within 6 months of implementation.",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/0/0b/ASOS_logo.svg",
+  },
+  {
+    industry: "SaaS",
+    company: "HubSpot",
+    challenge: "Difficulty identifying high-value leads from marketing qualified leads",
+    solution: "Integrated AI-based predictive lead scoring and launched automated, behavior-driven nurture campaigns.",
+    result: "2x increase in sales team efficiency and a 50% faster lead-to-close time.",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/HubSpot_Logo.svg",
+  },
+  {
+    industry: "Retail",
+    company: "Sephora",
+    challenge: "Generic email campaigns with low engagement and poor personalization",
+    solution: "Adopted AI for hyper-personalized email marketing using dynamic product suggestions and predictive analysis.",
+    result: "70% boost in email open rates and 40% increase in click-through rates.",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/6/60/Sephora_logo.svg",
+  },
   ];
 
   const steps: Step[] = [
@@ -196,57 +194,8 @@ const AIMarketing: React.FC = () => {
     }
   ];
 
-  const BenefitCard: React.FC<Benefit> = ({ 
-    icon: Icon, 
-    title, 
-    description, 
-    gradient 
-  }) => (
-      <div className="relative h-full rounded-2xl bg-white/95 backdrop-blur-sm p-8">
-        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300`}>
-          <Icon className="text-white w-8 h-8" />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-4">{title}</h3>
-        <p className="text-gray-600 leading-relaxed">{description}</p>
-      </div>
-  );
 
 
-  const UseCaseCard: React.FC<UseCase> = ({ 
-    industry, 
-    company, 
-    challenge, 
-    solution, 
-    result, 
-    icon: Icon 
-  }) => (
-    <div>
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-br from-yellow-400  rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <Icon className="w-6 h-6 text-white" />
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-gray-900">{company}</h3>
-          <span className="text-yellow-400 font-medium">{industry}</span>
-        </div>
-      </div>
-      
-      <div className="space-y-4">
-        <div>
-          <h4 className="font-semibold text-gray-900 mb-2">Challenge:</h4>
-          <p className="text-gray-600">{challenge}</p>
-        </div>
-        <div>
-          <h4 className="font-semibold text-gray-900 mb-2">AI Solution:</h4>
-          <p className="text-gray-600">{solution}</p>
-        </div>
-        <div className="bg-green-50 p-4 rounded-xl">
-          <h4 className="font-semibold text-green-800 mb-2">Result:</h4>
-          <p className="text-green-700 font-medium">{result}</p>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen  bg-black relative overflow-hidden">
@@ -284,7 +233,7 @@ const AIMarketing: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <Link to="/">
+              <Link to="/ai-audit">
                 <button className="group bg-yellow-400 text-black font-bold px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-yellow-400/25 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span>Start Your AI Journey</span>
@@ -367,44 +316,94 @@ const AIMarketing: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="relative z-10 py-24 px-4 sm:px-6 bg-gradient-to-br from-gray-50 to-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Key Benefits of <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">AI Marketing</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover how AI transforms every aspect of your marketing strategy, from customer acquisition to retention and growth.
-            </p>
-          </div>
+      <section className="relative z-10 py-28 px-6 sm:px-12 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+  <div className="container mx-auto max-w-7xl">
+    <div className="text-center mb-20">
+      <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mb-6">
+        Key Benefits of{" "}
+        <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          AI Marketing
+        </span>
+      </h2>
+      <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+        Unleash the power of artificial intelligence to elevate your marketing strategy — from hyper-personalized campaigns to data-driven decisions that accelerate growth and customer loyalty.
+      </p>
+    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit: Benefit, index: number) => (
-              <BenefitCard key={index} {...benefit} />
-            ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {benefits.map((benefit: Benefit, index: number) => (
+        <div
+          key={index}
+          className="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-gray-100"
+        >
+          <div className="flex items-center justify-center w-14 h-14 mb-5 rounded-full bg-gradient-to-tr from-yellow-400 to-orange-500 text-white text-xl font-bold shadow-md">
+            <benefit.icon className="w-8 h-8" />
           </div>
+          <h3 className="text-xl font-semibold text-gray-800 group-hover:text-orange-600 transition-colors duration-200 mb-3">
+            {benefit.title}
+          </h3>
+          <p className="text-gray-600 leading-relaxed text-base">
+            {benefit.description}
+          </p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Use Cases Section */}
-      <section className="relative z-10 py-24 px-4 sm:px-6 bg-gradient-to-br from-gray-50 to-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Real-World <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Success Stories</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how businesses across different industries have leveraged AI marketing to achieve remarkable results.
-            </p>
-          </div>
+      <section className="relative z-10 py-28 px-6 sm:px-12 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+  <div className="container mx-auto max-w-7xl">
+    <div className="text-center mb-20">
+      <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug mb-6">
+        Real-World{" "}
+        <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          Success Stories
+        </span>
+      </h2>
+      <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+        Explore how leading businesses across various industries have used AI-driven marketing strategies to unlock growth, optimize customer journeys, and boost ROI.
+      </p>
+    </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {useCases.map((useCase: UseCase, index: number) => (
-              <UseCaseCard key={index} {...useCase} />
-            ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {useCases.map((useCase: UseCase, index: number) => (
+        <div
+          key={index}
+          className="bg-white p-8 rounded-2xl border border-gray-200 shadow-md hover:shadow-xl transition duration-300 group"
+        >
+          <div className="mb-4">
+            <div className="w-full h-48 flex items-center justify-center bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl mb-6">
+              <img
+                src={useCase.logo}
+                alt={`${useCase.company} logo`}
+                className="h-16 max-w-[80%] object-contain"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 group-hover:text-orange-600 transition-colors duration-200 mb-2">
+              {useCase.company}
+            </h3>
+            <p className="text-sm text-gray-500 italic mb-3">{useCase.industry}</p>
+            <div className="text-base text-gray-600 leading-relaxed space-y-2">
+              <div>
+                <span className="font-semibold">Challenge:</span> {useCase.challenge}
+              </div>
+              <div>
+                <span className="font-semibold">AI Solution:</span> {useCase.solution}
+              </div>
+              <div>
+                <span className="font-semibold">Result:</span> {useCase.result}
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+
 
       {/* Getting Started Section */}
       <section className="relative z-10 py-24 px-4 sm:px-6 bg-white">

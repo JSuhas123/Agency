@@ -89,7 +89,7 @@ const categories: string[] = ["All", "Technology", "Marketing", "Design", "Busin
 
 const Blog: React.FC<BlogProps> = ({ 
   posts = mockBlogPosts, 
-  linkedinUrl = "#", 
+  linkedinUrl = "https://www.linkedin.com/company/surgewing/?viewAsMember=true", 
   mediumUrl = "#" 
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -352,7 +352,7 @@ const Blog: React.FC<BlogProps> = ({
                   </p>
                   
                   <a 
-                    href="https://www.linkedin.com/company/surgewing/?viewAsMember=true"
+                    href={linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-200 flex items-center gap-2 group w-fit"
