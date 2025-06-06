@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import nodemailer from 'nodemailer';
-import { AuditModel } from '../models/Audit';
+import twilio from 'twilio';
+import Audit from '../models/Audit';
+import { verifyCaptcha } from '../utils/captcha';
+import { sendAuditNotification } from '../utils/email';
 
 export const submitAudit = async (req: Request, res: Response) => {
   try {
@@ -12,56 +14,82 @@ export const submitAudit = async (req: Request, res: Response) => {
       website,
       industry,
       challenges,
+      revenue,
+      teamSize,
+      captchaToken
     } = req.body;
 
-    // 1. Save to MongoDB
-    await AuditModel.create({
+    // Verify CAPTCHA
+    if (!(await verifyCaptcha(captchaToken))) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid CAPTCHA verification'
+      });
+    }
+
+    // Save to MongoDB
+    const audit = new Audit({
       fullName,
       companyName,
       email,
       website,
       industry,
       challenges,
+      revenue,
+      teamSize
+    });
+    await audit.save();
+
+    // Send email notification
+    await sendAuditNotification({
+      fullName,
+      companyName,
+      email,
+      website,
+      industry,
+      challenges
     });
 
-    // 2. Send Email (Nodemailer)
-    const transporter = nodemailer.createTransport({
-      service: 'gmail', // Or 'SendGrid', etc.
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    // Slack notification
+    if (process.env.SLACK_WEBHOOK_URL) {
+      await axios.post(process.env.SLACK_WEBHOOK_URL, {
+        text: `🧠 *New AI Audit Request*\n*Name:* ${fullName}\n*Company:* ${companyName}\n*Email:* ${email}\n*Industry:* ${industry}\n*Challenges:* ${challenges.slice(0, 100)}...`
+      });
+    }
 
-    await transporter.sendMail({
-      from: `"AI Audit Bot" <${process.env.EMAIL_USER}>`,
-      to: process.env.NOTIFY_EMAIL,
-      subject: `🧠 New AI Audit: ${fullName} (${companyName})`,
-      text: `
-New Audit Request:
-Name: ${fullName}
-Company: ${companyName}
-Email: ${email}
-Website: ${website}
-Industry: ${industry}
-Challenges: ${challenges}
-      `,
-    });
+    // WhatsApp notification (using Twilio API)
+      const client = twilio(
+        process.env.TWILIO_ACCOUNT_SID,
+        process.env.TWILIO_AUTH_TOKEN
+      );
 
-    // 3. Slack Webhook Notification
-    await axios.post(process.env.SLACK_WEBHOOK_URL!, {
-      text: `🧠 *New AI Audit*\n*Name:* ${fullName}\n*Company:* ${companyName}\n*Email:* ${email}\n*Industry:* ${industry}`,
-    });
+      
+      await client.messages.create({
+        body: `New AI Audit: ${fullName} from ${companyName} (${industry})`,
+        from: 'whatsapp:+14155238886',
+        to: `whatsapp:${process.env.ADMIN_PHONE}`
+      });
+    // End WhatsApp notification block
 
-    // 4. WhatsApp Webhook Notification (using Twilio or Gupshup as example)
-    await axios.post(process.env.WHATSAPP_WEBHOOK_URL!, {
-      to: process.env.WHATSAPP_YOUR_NUMBER,
-      message: `🧠 New AI Audit\nName: ${fullName}\nCompany: ${companyName}\nEmail: ${email}\nChallenges: ${challenges}`,
-    });
+    // Zapier webhook for CRM integration
+    if (process.env.ZAPIER_WEBHOOK_URL) {
+      await axios.post(process.env.ZAPIER_WEBHOOK_URL, {
+        ...req.body,
+        audit_value: 1375000,
+        source: 'AI Audit Landing Page'
+      });
+    }
 
-    return res.status(200).json({ message: 'Audit submitted successfully!' });
+    return res.status(200).json({ 
+      success: true,
+      message: 'Audit request submitted successfully!'
+    });
   } catch (error) {
     console.error('Error submitting audit:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ 
+      success: false,
+      error: 'Internal Server Error',
+      details: typeof error === 'object' && error !== null && 'message' in error ? (error as { message?: string }).message : String(error)
+    });
   }
 };

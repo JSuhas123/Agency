@@ -37,7 +37,7 @@ interface UseCase {
   challenge: string;
   solution: string;
   result: string;
-  logo: string;
+  src: string;
 }
 
 interface Step {
@@ -106,32 +106,41 @@ const AIMarketing: React.FC = () => {
 
   
 
-  const useCases: UseCase[] = [
-    {
+ const useCases: UseCase[] = [
+  {
     industry: "E-commerce",
     company: "ASOS",
-    challenge: "Low conversion rates and high cart abandonment",
-    solution: "Leveraged AI for personalized product recommendations and dynamic pricing models using machine learning algorithms.",
-    result: "35% increase in average order value and 20% reduction in cart abandonment rate within 6 months of implementation.",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/0b/ASOS_logo.svg",
+    challenge: "Low conversion rates and high cart abandonment.",
+    solution:
+      "Implemented AI-driven product recommendations and dynamic pricing tailored to user behavior.",
+    result:
+      "Achieved a 35% increase in average order value and a 20% decrease in cart abandonment within 6 months.",
+    src: "/images/asos-logo.jpg"// Updated logo
   },
   {
     industry: "SaaS",
     company: "HubSpot",
-    challenge: "Difficulty identifying high-value leads from marketing qualified leads",
-    solution: "Integrated AI-based predictive lead scoring and launched automated, behavior-driven nurture campaigns.",
-    result: "2x increase in sales team efficiency and a 50% faster lead-to-close time.",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/HubSpot_Logo.svg",
+    challenge:
+      "Struggled to prioritize high-value leads from a growing pool of marketing-qualified leads.",
+    solution:
+      "Integrated predictive lead scoring using AI, and automated behavior-based email nurturing.",
+    result:
+      "Doubled sales team efficiency and reduced lead-to-close time by 50%.",
+    src:"/images/hubspot-logo-vector.jpg", // Updated logo
   },
   {
     industry: "Retail",
     company: "Sephora",
-    challenge: "Generic email campaigns with low engagement and poor personalization",
-    solution: "Adopted AI for hyper-personalized email marketing using dynamic product suggestions and predictive analysis.",
-    result: "70% boost in email open rates and 40% increase in click-through rates.",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/6/60/Sephora_logo.svg",
+    challenge:
+      "Low engagement in generic email campaigns with minimal personalization.",
+    solution:
+      "Adopted AI to deliver hyper-personalized product recommendations and predictive email targeting.",
+    result:
+      "Improved open rates by 70% and increased click-through rates by 40%.",
+    src:"/images/Sephora.jpg", // Updated logo
   },
-  ];
+];
+
 
   const steps: Step[] = [
     {
@@ -168,31 +177,32 @@ const AIMarketing: React.FC = () => {
   ];
 
   const trends: Trend[] = [
-    {
-      title: "Generative AI Content Creation",
-      description: "AI-powered tools creating human-like content at scale, from blog posts to video scripts and social media content.",
-      icon: Sparkles,
-      impact: "High"
-    },
-    {
-      title: "Conversational AI & Chatbots",
-      description: "Advanced chatbots providing personalized customer service and driving sales through natural conversations.",
-      icon: MessageSquare,
-      impact: "High"
-    },
-    {
-      title: "Voice Search Optimization",
-      description: "AI algorithms optimizing content for voice queries as smart speakers and voice assistants gain popularity.",
-      icon: Brain,
-      impact: "Medium"
-    },
-    {
-      title: "Privacy-First AI Marketing",
-      description: "AI solutions that respect user privacy while delivering personalized experiences in a cookieless future.",
-      icon: Shield,
-      impact: "Critical"
-    }
-  ];
+  {
+    title: "Generative AI Content Creation",
+    description: "AI-powered tools like GPT and DALL·E are transforming content creation by generating human-like text, visuals, and videos at scale. These tools are widely used for writing blog articles, ad copy, video scripts, email marketing content, and even social media posts—boosting efficiency and reducing creative workload for marketers and creators.",
+    icon: Sparkles,
+    impact: "High"
+  },
+  {
+    title: "Conversational AI & Chatbots",
+    description: "Modern conversational AI systems, such as ChatGPT and Dialogflow-based bots, provide seamless customer support, lead generation, and sales conversions via real-time messaging platforms. With improved NLP capabilities, these bots can now understand context, handle complex queries, and offer human-like interactions, elevating customer experience across websites, apps, and messaging services.",
+    icon: MessageSquare,
+    impact: "High"
+  },
+  {
+    title: "Voice Search Optimization",
+    description: "As smart speakers and virtual assistants like Alexa, Siri, and Google Assistant become commonplace, businesses are optimizing their content for voice search. Voice search optimization uses AI and natural language understanding to align web content with how people speak, enabling more effective SEO strategies and better user engagement in hands-free environments.",
+    icon: Brain,
+    impact: "Medium"
+  },
+  {
+    title: "Privacy-First AI Marketing",
+    description: "In response to growing concerns around data privacy and regulations like GDPR and CCPA, AI-driven marketing is shifting toward privacy-first approaches. These systems deliver hyper-personalized experiences without relying on third-party cookies by leveraging first-party data, federated learning, and contextual targeting, ensuring both compliance and trust in a cookieless future.",
+    icon: Shield,
+    impact: "Critical"
+  }
+];
+
 
 
 
@@ -376,7 +386,7 @@ const AIMarketing: React.FC = () => {
           <div className="mb-4">
             <div className="w-full h-48 flex items-center justify-center bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl mb-6">
               <img
-                src={useCase.logo}
+                src={useCase.src}
                 alt={`${useCase.company} logo`}
                 className="h-16 max-w-[80%] object-contain"
               />

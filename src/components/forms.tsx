@@ -14,6 +14,8 @@ interface Grecaptcha {
   // Add more methods if needed
 }
 
+const RECAPTCHA_SITE_KEY = '6Lf9lVYrAAAAAAAKTFd22AC2LLXjj_7PmwxVrAdW';
+
 const Forms = () => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -25,12 +27,12 @@ const Forms = () => {
     revenue: '',
     challenges: ''
   });
-  
+
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string>('');
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
+  const recaptchaRef = useRef<any>(null);
 
   // Load reCAPTCHA script only if not already present
   useEffect(() => {
@@ -55,7 +57,7 @@ const Forms = () => {
     }
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -78,13 +80,13 @@ const Forms = () => {
     setCaptchaError('reCAPTCHA verification failed. Please try again.');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Validate required fields
     const requiredFields = ['fullName', 'companyName', 'email', 'industry', 'challenges'];
     const missingFields = requiredFields.filter(field => !formData[field].trim());
-    
+
     if (missingFields.length > 0) {
       alert('Please fill in all required fields.');
       return;
@@ -107,7 +109,6 @@ const Forms = () => {
     setCaptchaError('');
 
     try {
-      // Simulate form submission with reCAPTCHA verification
       const response = await fetch('/api/submit-audit-form', {
         method: 'POST',
         headers: {
@@ -135,8 +136,7 @@ const Forms = () => {
         if (recaptchaRef.current) {
           recaptchaRef.current.reset();
         }
-      } 
-      else {
+      } else {
         throw new Error('Submission failed');
       }
     } catch (error) {
@@ -146,33 +146,6 @@ const Forms = () => {
       setIsSubmitting(false);
     }
   };
-  // Custom reCAPTCHA component using react-google-recaptcha
-  const RECAPTCHA_SITE_KEY = '6Lf9lVYrAAAAAAAKTFd22AC2LLXjj_7PmwxVrAdW'; 
-  // ReCaptcha component moved outside Forms and receives handlers as props
-  type ReCaptchaProps = {
-    siteKey: string;
-    onChange: (token: string | null) => void;
-    onExpired: () => void;
-    onErrored: () => void;
-    recaptchaRef: React.RefObject<ReCAPTCHA>;
-  };
-
-  const ReCaptcha: React.FC<ReCaptchaProps> = ({
-    siteKey,
-    onChange,
-    onExpired,
-    onErrored,
-    recaptchaRef,
-  }) => (
-    <ReCAPTCHA
-      sitekey={siteKey}
-      onChange={onChange}
-      onExpired={onExpired}
-      onErrored={onErrored}
-      theme="dark"
-      ref={recaptchaRef}
-    />
-  );
 
   return (
     <section id="audit-form" className="py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
@@ -376,12 +349,13 @@ const Forms = () => {
               <div className="space-y-4">
                 <div className="flex justify-center">
                   <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
-                    <ReCaptcha
-                      siteKey={RECAPTCHA_SITE_KEY}
+                    <ReCAPTCHA
+                      sitekey={RECAPTCHA_SITE_KEY}
                       onChange={handleCaptchaChange}
                       onExpired={handleCaptchaExpired}
                       onErrored={handleCaptchaError}
-                      recaptchaRef={recaptchaRef}
+                      theme="dark"
+                      ref={recaptchaRef}
                     />
                   </div>
                 </div>

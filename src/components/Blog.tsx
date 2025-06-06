@@ -1,7 +1,6 @@
-import { ArrowRight, BookOpen, Calendar, ChevronLeft, ChevronRight, Clock, ExternalLink, Filter, Linkedin, Mail, Search, Tag, Users } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
+import { AlertCircle, ArrowRight, BookOpen, Calendar, CheckCircle, ChevronLeft, ChevronRight, Clock, ExternalLink, Filter, Linkedin, Loader2, Mail, Search, Tag, Users } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from './Navbar';
-
 
 // Types
 interface BlogPost {
@@ -20,6 +19,9 @@ interface BlogProps {
   linkedinUrl?: string;
   mediumUrl?: string;
 }
+
+// Newsletter submission states
+type NewsletterState = 'idle' | 'loading' | 'success' | 'error';
 
 // Mock blog data
 const mockBlogPosts: BlogPost[] = [
@@ -87,6 +89,194 @@ const mockBlogPosts: BlogPost[] = [
 
 const categories: string[] = ["All", "Technology", "Marketing", "Design", "Business"];
 
+// Newsletter Modal Component (now just shows status)
+const NewsletterModal = ({ 
+  showNewsletter, 
+  setShowNewsletter,
+  newsletterState,
+  setNewsletterState,
+  errorMessage
+}: { 
+  showNewsletter: boolean; 
+  setShowNewsletter: (val: boolean) => void;
+  newsletterState: NewsletterState;
+  setNewsletterState: (state: NewsletterState) => void;
+  errorMessage: string;
+}) => {
+  const handleClose = React.useCallback(() => {
+    setShowNewsletter(false);
+    setNewsletterState('idle');
+  }, [setShowNewsletter, setNewsletterState]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showNewsletter) {
+        handleClose();
+      }
+    };
+
+    if (showNewsletter) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showNewsletter, handleClose]);
+
+  if (!showNewsletter) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="newsletter-title"
+    >
+      <div className="bg-white rounded-xl p-8 max-w-md w-full relative animate-in zoom-in-95 duration-200">
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded"
+          aria-label="Close newsletter signup"
+        >
+          ×
+        </button>
+        <div className="text-center">
+          <div className="bg-green-100 p-4 rounded-full w-fit mx-auto mb-4">
+            <Mail className="w-8 h-8 text-green-600" />
+          </div>
+          <h3 id="newsletter-title" className="text-2xl font-bold text-gray-900 mb-2">
+            Subscribe to Our Newsletter
+          </h3>
+          <p className="text-gray-600 mb-6">
+            Get the latest updates and insights delivered to your inbox.
+          </p>
+          {newsletterState === 'loading' && (
+            <div className="flex flex-col items-center gap-4 py-8">
+              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+              <p className="text-gray-600">Subscribing...</p>
+            </div>
+          )}
+          {newsletterState === 'error' && (
+            <div className="flex flex-col items-center gap-4 py-8">
+              <AlertCircle className="w-8 h-8 text-red-500" />
+              <div className="text-center">
+                <p className="text-red-600 font-medium mb-2">Failed to subscribe</p>
+                <p className="text-gray-600 text-sm mb-4">
+                  {errorMessage || 'Please check your internet connection and try again.'}
+                </p>
+                <button
+                  onClick={handleClose}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+          {newsletterState === 'success' && (
+            <div className="flex flex-col items-center gap-4 py-8">
+              <CheckCircle className="w-8 h-8 text-green-500" />
+              <div className="text-center">
+                <p className="text-green-600 font-medium mb-2">Successfully subscribed!</p>
+                <p className="text-gray-600 text-sm">
+                  Thank you for subscribing. You'll receive our latest updates soon.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Newsletter CTA Component (submits email to backend)
+const NewsletterCTA: React.FC<{ 
+  onSubmit: (email: string) => void; 
+  newsletterState: NewsletterState; 
+}> = ({ onSubmit, newsletterState }) => {
+  const [email, setEmail] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    setEmailError("");
+
+    if (!email.trim()) {
+      setEmailError("Email address is required");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+
+    onSubmit(email);
+    setEmail("");
+  };
+
+  const isLoading = newsletterState === 'loading';
+
+  return (
+    <section className="bg-gradient-to-br from-yellow-100 to-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto mb-16">
+      <div className="flex flex-col md:flex-row items-center gap-8">
+        <div className="flex-shrink-0 flex flex-col items-center md:items-start">
+          <Mail className="w-12 h-12 text-yellow-500 mb-2" />
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Join Our Newsletter</h3>
+          <p className="text-gray-600 mb-4 text-center md:text-left">
+            Get the latest articles, insights, and exclusive content delivered straight to your inbox.
+          </p>
+        </div>
+        <form className="flex flex-col md:flex-row gap-4 w-full" onSubmit={handleSubmit} noValidate>
+          <div className="flex-1">
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`w-full px-4 py-3 border ${emailError ? 'border-red-400' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200`}
+              disabled={isLoading}
+              required
+              aria-label="Email address"
+            />
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="bg-yellow-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-all duration-200 flex items-center justify-center min-w-[140px]"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                Subscribing...
+              </>
+            ) : (
+              <>
+                Subscribe
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </>
+            )}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
 const Blog: React.FC<BlogProps> = ({ 
   posts = mockBlogPosts, 
   linkedinUrl = "https://www.linkedin.com/company/surgewing/?viewAsMember=true", 
@@ -96,7 +286,9 @@ const Blog: React.FC<BlogProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showNewsletter, setShowNewsletter] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
+  const [newsletterState, setNewsletterState] = useState<NewsletterState>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [newsletterEmail, setNewsletterEmail] = useState<string>("");
   const postsPerPage: number = 4;
 
   // Filter and search logic
@@ -125,13 +317,33 @@ const Blog: React.FC<BlogProps> = ({
     setCurrentPage(1);
   };
 
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    if (email) {
+  // Updated: Actually submit email to backend
+  const handleNewsletterSubmit = React.useCallback(async (email: string): Promise<void> => {
+    setNewsletterState('loading');
+    setErrorMessage("");
+    setNewsletterEmail(email);
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setShowNewsletter(true);
+        setNewsletterState('success');
+      } else {
+        setNewsletterState('error');
+        setErrorMessage(data.error || 'Failed to subscribe. Please try again.');
+        setShowNewsletter(true);
+      }
+    } catch (error) {
+      setNewsletterState('error');
+      setErrorMessage('Failed to process subscription. Please try again.');
       setShowNewsletter(true);
-      setEmail("");
     }
-  };
+  }, []);
 
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -141,10 +353,17 @@ const Blog: React.FC<BlogProps> = ({
     });
   };
 
+  // Reset search when category changes
+  useEffect(() => {
+    if (selectedCategory !== "All") {
+      setSearchTerm("");
+    }
+  }, [selectedCategory]);
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
         {/* Hero Section */}
         <section className="relative bg-black text-yellow-400 py-20 px-4 overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -391,69 +610,22 @@ const Blog: React.FC<BlogProps> = ({
               </div>
             </div>
           </section>
-
-          {/* Newsletter CTA */}
-          <section className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-8 md:p-12 text-white text-center relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="bg-white bg-opacity-20 p-4 rounded-xl w-fit mx-auto mb-6">
-                <Mail className="w-12 h-12" />
-              </div>
-              
-              <h2 className="text-4xl font-bold mb-4">Stay in the Loop</h2>
-              <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Get our latest articles, insights, and exclusive content delivered straight to your inbox. 
-                Join thousands of professionals who trust our expertise.
-              </p>
-              
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                  required
-                  className="flex-1 px-6 py-3 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none"
-                />
-                <button 
-                  type="submit"
-                  className="bg-white text-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200 whitespace-nowrap"
-                >
-                  Subscribe Now
-                </button>
-              </form>
-              
-              <p className="text-sm text-white-200 mt-4">
-                No spam, unsubscribe at any time. We respect your privacy.
-              </p>
-            </div>
-          </section>
+          {/* Newsletter CTA Section */}
+          <NewsletterCTA
+            onSubmit={handleNewsletterSubmit}
+            newsletterState={newsletterState}
+          />
         </div>
-
         {/* Newsletter Modal */}
-        {showNewsletter && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl p-8 max-w-md w-full">
-              <div className="text-center">
-                <div className="bg-green-100 p-4 rounded-full w-fit mx-auto mb-4">
-                  <Mail className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
-                <p className="text-gray-600 mb-6">
-                  Your subscription request has been received. Check your email for confirmation.
-                </p>
-                <button
-                  onClick={() => setShowNewsletter(false)}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-200"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <NewsletterModal      
+          showNewsletter={showNewsletter}
+          setShowNewsletter={setShowNewsletter}
+          newsletterState={newsletterState}
+          setNewsletterState={setNewsletterState}
+          errorMessage={errorMessage}
+        />
       </div>
     </>
   );
-};
-
+}
 export default Blog;

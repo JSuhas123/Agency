@@ -1,60 +1,55 @@
+import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 
-interface Audit {
+dotenv.config();
+
+interface AuditNotificationData {
   fullName: string;
+  companyName: string;
   email: string;
-  company: string;
   website?: string;
-  industry?: string;
-  challenges?: string;
-  submittedAt?: Date;
+  industry: string;
+  challenges: string;
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER!,
-    pass: process.env.EMAIL_PASS!,
-  },
-});
+export const sendAuditNotification = async (data: AuditNotificationData) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT || '587'),
+      secure: process.env.EMAIL_SECURE === 'true',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
 
-// 1. Email to Internal Team
-export const notifyTeamEmail = async (audit: Audit) => {
-  await transporter.sendMail({
-    from: '"AI Audit Bot" <no-reply@aiaudit.com>',
-    to: process.env.EMAIL_RECEIVER!,
-    subject: `📥 New AI Audit: ${audit.fullName}`,
-    text: `
-🧠 New AI Audit Submitted!
+    const mailOptions = {
+      from: `"AI Audit Bot" <${process.env.EMAIL_FROM}>`,
+      to: process.env.NOTIFY_EMAIL,
+      subject: `🧠 New AI Audit: ${data.fullName} (${data.companyName})`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">New AI Audit Request</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Name:</td><td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">${data.fullName}</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Company:</td><td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">${data.companyName}</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Email:</td><td style="padding: 8px; border-bottom: 1px solid #e5e7eb;"><a href="mailto:${data.email}">${data.email}</a></td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Website:</td><td style="padding: 8px; border-bottom: 1px solid #e5e7eb;"><a href="${data.website}" target="_blank">${data.website || 'N/A'}</a></td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Industry:</td><td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">${data.industry}</td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Challenges:</td><td style="padding: 8px;">${data.challenges}</td></tr>
+          </table>
+          <div style="margin-top: 20px; text-align: center;">
+            <a href="${process.env.ADMIN_DASHBOARD_URL}" style="display: inline-block; background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View in Dashboard</a>
+          </div>
+        </div>
+      `
+    };
 
-👤 Name: ${audit.fullName}
-📧 Email: ${audit.email}
-🏢 Company: ${audit.company}
-🌐 Website: ${audit.website || 'N/A'}
-🏭 Industry: ${audit.industry || 'N/A'}
-📌 Challenges: ${audit.challenges || 'N/A'}
-🕒 Submitted At: ${new Date().toLocaleString()}
-    `.trim(),
-  });
-};
-
-// 2. Auto-response to Client
-export const autoReplyClient = async (audit: Audit) => {
-  await transporter.sendMail({
-    from: '"AI Audit Team" <no-reply@aiaudit.com>',
-    to: audit.email,
-    subject: '✅ We’ve received your AI Audit request!',
-    text: `
-Hi ${audit.fullName},
-
-Thank you for submitting your AI Audit request!
-
-Our team will review your information and get back to you within 24 hours with tailored insights and recommendations for how AI can boost your business.
-
-Meanwhile, feel free to check out our blog or case studies at https://yourdomain.com/resources
-
-Thanks again,  
-– The AI Audit Team
-    `.trim(),
-  });
+    await transporter.sendMail(mailOptions);
+    return { success: true };
+  } catch (error) {
+    console.error('Email sending failed:', error);
+    return { success: false, error };
+  }
 };

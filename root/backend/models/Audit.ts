@@ -1,52 +1,27 @@
-import { Document, model, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-// 1. Define a TypeScript interface for type safety
 export interface IAudit extends Document {
   fullName: string;
+  companyName: string;
   email: string;
-  company: string;
   website?: string;
   industry: string;
-  challenges?: string;
-  submittedAt: Date;
+  challenges: string;
+  revenue?: string;
+  teamSize?: string;
+  createdAt: Date;
 }
 
-// 2. Create Mongoose schema
-const AuditSchema: Schema = new Schema<IAudit>({
-  fullName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    lowercase: true,
-    trim: true,
-    match: [/.+@.+\..+/, 'Please enter a valid email address'],
-  },
-  company: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  website: {
-    type: String,
-    trim: true,
-  },
-  industry: {
-    type: String,
-    required: true,
-  },
-  challenges: {
-    type: String,
-    maxlength: 1000,
-  },
-  submittedAt: {
-    type: Date,
-    default: Date.now,
-  },
+const AuditSchema = new Schema<IAudit>({
+  fullName: { type: String, required: true },
+  companyName: { type: String, required: true },
+  email: { type: String, required: true },
+  website: String,
+  industry: { type: String, required: true },
+  challenges: { type: String, required: true },
+  revenue: String,
+  teamSize: String,
+  createdAt: { type: Date, default: Date.now }
 });
 
-// 3. Export the model
-export const AuditModel = model<IAudit>('Audit', AuditSchema);
+export default mongoose.model<IAudit>('Audit', AuditSchema);

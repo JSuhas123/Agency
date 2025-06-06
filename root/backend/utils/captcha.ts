@@ -1,13 +1,24 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
+import qs from 'qs'; // helps with x-www-form-urlencoded encoding
 
-export const verifyCaptcha = async (token: string) => {
-  const secret = process.env.RECAPTCHA_SECRET!;
-  const res = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `secret=${secret}&response=${token}`,
-  });
+export const verifyCaptcha = async (token: string): Promise<boolean> => {
+  try {
+    const response = await axios.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      qs.stringify({
+        secret: process.env.RECAPTCHA_SECRET_KEY,
+        response: token,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
 
-  const data = await res.json();
-  return data.success;
+    return response.data.success;
+  } catch (error) {
+    console.error('Captcha verification failed:', error);
+    return false;
+  }
 };
