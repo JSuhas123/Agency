@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowRight, BookOpen, Calendar, CheckCircle, ChevronLeft, ChevronRight, Clock, ExternalLink, Filter, Linkedin, Loader2, Mail, Search, Tag, Users } from 'lucide-react';
+import { AlertCircle, ArrowRight, BookOpen, CheckCircle, ChevronLeft, ChevronRight, Clock, ExternalLink, Filter, Linkedin, Loader2, Mail, Search, Tag, Users } from 'lucide-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from './Navbar';
 
@@ -8,10 +8,11 @@ interface BlogPost {
   title: string;
   excerpt: string;
   image: string;
-  date: string;
   readTime: string;
   category: string;
   tags: string[];
+  url?: string; // Optional URL for the post
+
 }
 
 interface BlogProps {
@@ -30,60 +31,62 @@ const mockBlogPosts: BlogPost[] = [
     title: "The Future of AI in Web Development",
     excerpt: "Exploring how artificial intelligence is revolutionizing the way we build and maintain websites, from automated testing to intelligent design systems.",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
-    date: "2024-05-15",
     readTime: "8 min read",
     category: "Technology",
-    tags: ["AI", "Web Development", "Future Tech"]
+    tags: ["AI", "Web Development", "Future Tech"],
+    url: 'https://medium.com/@surgewingsolutions/the-future-of-ai-in-web-development-a-deep-dive-79378aa67ab4' // Medium blog link
+
   },
   {
     id: 2,
     title: "Building Scalable Marketing Funnels",
     excerpt: "A comprehensive guide to creating marketing funnels that grow with your business and deliver consistent results across all channels.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
-    date: "2024-05-10",
     readTime: "12 min read",
     category: "Marketing",
-    tags: ["Marketing", "Sales Funnel", "Growth"]
+    tags: ["Marketing", "Sales Funnel", "Growth"],
+    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
+
   },
   {
     id: 3,
     title: "React Performance Optimization Techniques",
     excerpt: "Advanced strategies for optimizing React applications, including code splitting, memoization, and efficient state management patterns.",
     image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop",
-    date: "2024-05-05",
     readTime: "15 min read",
     category: "Technology",
-    tags: ["React", "Performance", "JavaScript"]
+    tags: ["React", "Performance", "JavaScript"],
+    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
   },
   {
     id: 4,
     title: "The Psychology of User Experience Design",
     excerpt: "Understanding how cognitive biases and psychological principles can be leveraged to create more intuitive and engaging user interfaces.",
     image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=250&fit=crop",
-    date: "2024-04-28",
     readTime: "10 min read",
     category: "Design",
-    tags: ["UX", "Psychology", "Design"]
+    tags: ["UX", "Psychology", "Design"],
+    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
   },
   {
     id: 5,
     title: "Building Remote Team Culture",
     excerpt: "Strategies for fostering collaboration, communication, and company culture in distributed teams across different time zones.",
     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=250&fit=crop",
-    date: "2024-04-20",
     readTime: "7 min read",
     category: "Business",
-    tags: ["Remote Work", "Team Culture", "Management"]
+    tags: ["Remote Work", "Team Culture", "Management"],
+    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
   },
   {
     id: 6,
     title: "Data-Driven Content Strategy",
     excerpt: "How to use analytics, user behavior data, and market research to create content that resonates with your target audience.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
-    date: "2024-04-15",
     readTime: "9 min read",
     category: "Marketing",
-    tags: ["Content Strategy", "Analytics", "Data"]
+    tags: ["Content Strategy", "Analytics", "Data"],
+    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
   }
 ];
 
@@ -280,7 +283,7 @@ const NewsletterCTA: React.FC<{
 const Blog: React.FC<BlogProps> = ({ 
   posts = mockBlogPosts, 
   linkedinUrl = "https://www.linkedin.com/company/surgewing/?viewAsMember=true", 
-  mediumUrl = "#" 
+  mediumUrl = "https://medium.com/@surgewingsolutions" 
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -288,7 +291,6 @@ const Blog: React.FC<BlogProps> = ({
   const [showNewsletter, setShowNewsletter] = useState<boolean>(false);
   const [newsletterState, setNewsletterState] = useState<NewsletterState>('idle');
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [newsletterEmail, setNewsletterEmail] = useState<string>("");
   const postsPerPage: number = 4;
 
   // Filter and search logic
@@ -321,10 +323,10 @@ const Blog: React.FC<BlogProps> = ({
   const handleNewsletterSubmit = React.useCallback(async (email: string): Promise<void> => {
     setNewsletterState('loading');
     setErrorMessage("");
-    setNewsletterEmail(email);
 
     try {
-      const response = await fetch('/api/newsletter', {
+      // Replace the following fetch URL with your actual backend endpoint
+      const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -338,20 +340,12 @@ const Blog: React.FC<BlogProps> = ({
         setErrorMessage(data.error || 'Failed to subscribe. Please try again.');
         setShowNewsletter(true);
       }
-    } catch (error) {
+    } catch {
       setNewsletterState('error');
       setErrorMessage('Failed to process subscription. Please try again.');
       setShowNewsletter(true);
     }
-  }, []);
-
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  }, [setNewsletterState, setShowNewsletter, setErrorMessage]);
 
   // Reset search when category changes
   useEffect(() => {
@@ -463,10 +457,6 @@ const Blog: React.FC<BlogProps> = ({
                       <div className="p-6">
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                           <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{formatDate(post.date)}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
                             <span>{post.readTime}</span>
                           </div>
@@ -491,10 +481,15 @@ const Blog: React.FC<BlogProps> = ({
                           ))}
                         </div>
                         
-                        <button className="flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 group">
-                          Read More 
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                        </button>
+                        <a
+                        href={post.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 group"
+                        >
+                            Read More
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                        </a>
                       </div>
                     </article>
                   ))}
