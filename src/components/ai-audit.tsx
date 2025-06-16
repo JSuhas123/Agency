@@ -190,9 +190,11 @@ const AiAuditPage = () => {
               Get My Free ₹13,75,000 Audit
               <ArrowRightIcon className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
+            <a href="/contact">
             <button className="bg-white/20 backdrop-blur-sm text-black px-8 py-4 text-lg font-semibold rounded-2xl hover:bg-white/30 transition-all duration-300 border border-black/20">
-              📞 Book Strategy Call
+                📞 Book Strategy Call
             </button>
+            </a>
           </div>
 
           {/* Stats Row */}

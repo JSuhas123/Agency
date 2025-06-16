@@ -1,0 +1,392 @@
+/* PortfolioPage.module.css */
+
+.portfolioSection {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.hero {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #ffffff, #d1d5db);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroDesc {
+  font-size: 1.25rem;
+  color: #e2e8f0;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  color: #e2e8f0;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tab:hover, .activeTab {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+.activeTab {
+  background: linear-gradient(90deg, #FFD600);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.tabBadge {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.portfolioGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  padding: 0 2rem;
+}
+
+.portfolioCard {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transform: translateY(0);
+  cursor: pointer;
+}
+
+.portfolioCard:hover {
+  transform: translateY(-10px);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+}
+
+.cardImage {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.portfolioCard:hover .cardImage img {
+  transform: scale(1.1);
+}
+
+.cardBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  color: #1e293b;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.cardContent h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.cardContent p {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.cardStats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Modern Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px) saturate(120%);
+  animation: modalFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modalContent {
+  background: linear-gradient(135deg, #1e293b 80%, #0f172a 100%);
+  border-radius: 2rem;
+  max-width: 700px;
+  width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 48px 0 rgba(0,0,0,0.45);
+  padding: 2.5rem 2rem 2rem 2rem;
+  position: relative;
+  color: #f8fafc;
+  border: 2px solid #FFD600;
+  animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 1rem;
+}
+
+.closeButton {
+  background: linear-gradient(135deg, #FFD600 60%, #fbbf24 100%);
+  border: none;
+  color: #1e293b;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.closeButton:hover {
+  background: linear-gradient(135deg, #fbbf24 60%, #FFD600 100%);
+  color: #0f172a;
+  transform: scale(1.1);
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.modalImage {
+  width: 100%;
+  margin-bottom: 1.2rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px 0 rgba(37,99,235,0.12);
+  position: relative;
+}
+.modalImage img {
+  width: 100%;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.modalImage img:hover {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.modalStats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.modalStat {
+  background: linear-gradient(90deg, #FFD600 60%, #fbbf24 100%);
+  color: #1e293b;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  text-align: center;
+  min-width: 80px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.modalStatValue {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.modalStatLabel {
+  font-size: 0.85rem;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modalSection {
+  margin-bottom: 1.5rem;
+  background: rgba(30,41,59,0.7);
+  border-radius: 1rem;
+  padding: 1.2rem 1rem 1rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.modalSection h3 {
+  color: #FFD600;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.resultsList {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+.gallery {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.galleryItem {
+  border-radius: 0.7rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  background: #1e293b;
+  transition: transform 0.3s;
+}
+.galleryItem img {
+  width: 110px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  transition: transform 0.3s;
+}
+.galleryItem:hover img {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+.testimonial {
+  background: linear-gradient(90deg, #2563eb 10%, #1e293b 100%);
+  border-radius: 1rem;
+  padding: 1.2rem 1rem;
+  margin-top: 1rem;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+  position: relative;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+.testimonial:before {
+  content: '“';
+  font-size: 2.5rem;
+  color: #FFD600;
+  position: absolute;
+  top: 0.2rem;
+  left: 1rem;
+  opacity: 0.7;
+}
+.testimonialAuthor {
+  font-weight: 700;
+  color: #FFD600;
+  margin-top: 0.7rem;
+}
+.testimonialPosition {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .modalContent {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .modalHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .modalStats {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .galleryItem img {
+    width: 80px;
+    height: 55px;
+  }
+}

@@ -109,7 +109,7 @@ const Forms = () => {
     setCaptchaError('');
 
     try {
-      const response = await fetch('/api/submit-audit-form', {
+      const response = await fetch('/api/audit/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

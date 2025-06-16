@@ -31,7 +31,7 @@ const mockBlogPosts: BlogPost[] = [
     title: "The Future of AI in Web Development",
     excerpt: "Exploring how artificial intelligence is revolutionizing the way we build and maintain websites, from automated testing to intelligent design systems.",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
-    readTime: "8 min read",
+    readTime: "4 min read",
     category: "Technology",
     tags: ["AI", "Web Development", "Future Tech"],
     url: 'https://medium.com/@surgewingsolutions/the-future-of-ai-in-web-development-a-deep-dive-79378aa67ab4' // Medium blog link
@@ -45,7 +45,7 @@ const mockBlogPosts: BlogPost[] = [
     readTime: "12 min read",
     category: "Marketing",
     tags: ["Marketing", "Sales Funnel", "Growth"],
-    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
+    url: 'https://medium.com/@surgewingsolutions/building-scalable-marketing-funnels-c561a22ca637' // Medium blog link
 
   },
   {
@@ -56,7 +56,7 @@ const mockBlogPosts: BlogPost[] = [
     readTime: "15 min read",
     category: "Technology",
     tags: ["React", "Performance", "JavaScript"],
-    url: 'https://medium.com/@surgewing/ai-content-creation-xyz' // Medium blog link
+    url: 'https://medium.com/@surgewingsolutions/react-performance-optimization-techniques-f8f0621add15' // Medium blog link
   },
   {
     id: 4,
