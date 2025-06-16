@@ -32,7 +32,7 @@ const Forms = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string>('');
-  const recaptchaRef = useRef<any>(null);
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
   // Load reCAPTCHA script only if not already present
   useEffect(() => {

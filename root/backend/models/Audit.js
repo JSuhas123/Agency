@@ -9,6 +9,13 @@ const AuditSchema = new mongoose.Schema({
   challenges: { type: String, required: true },
   revenue: String,
   teamSize: String,
+  // AI Audit Features (now store recommendations/outputs)
+  aiOpportunityMapping: { type: [String], default: [] },
+  roiProjectionAnalysis: { type: String, default: '' },
+  customAIStrategyBlueprint: { type: [String], default: [] },
+  riskAssessmentMitigation: { type: [String], default: [] },
+  teamReadinessEvaluation: { type: String, default: '' },
+  priorityImplementationPlan: { type: [String], default: [] },
   createdAt: { type: Date, default: Date.now }
 });
 
